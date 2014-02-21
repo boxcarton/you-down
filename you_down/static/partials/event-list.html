@@ -1,0 +1,5 @@
+
+<div ng-repeat="event in events | orderBy: 'id':true ">
+	<h4><a href="/event/{{ event.id }}">{{ event.title }}</a></h4>
+	<p>{{ event.body }}<p>
+</div>

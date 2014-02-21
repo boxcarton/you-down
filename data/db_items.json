@@ -1,0 +1,22 @@
+{ "events": 
+	[
+		{
+			"name": "Korean Fried Chicken", 
+			"location": "Bonchon, Arlington",
+			"time": "tomorrow night at 7pm",
+			"people": ["muksit, jess, calvin"]
+		}, 
+		{
+			"name": "Dance Party", 
+			"location": "Flash",
+			"time": "Saturday night at 10pm",
+			"people": ["muskit, jess, calvin, yasaman, jeff"]
+		},
+		{
+			"name": "Basketball",
+			"location": "Courts on 18th, Admo",
+			"time": "sunday afternoon, 3pm",
+			"people": ["muksit", "steve", "dlu", "kyle"]
+		}
+	] 
+}
