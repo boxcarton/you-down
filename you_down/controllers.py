@@ -39,6 +39,7 @@ def rest_pages(model_name, item_id=None):
 				'you_down/templates/index.html').read())
 	abort(404)
 
+
 # special file handlers and error handlers
 @app.route('/favicon.ico')
 def favicon():
@@ -48,6 +49,3 @@ def favicon():
 @app.errorhandler(404)
 def page_not_found(e):
     return render_template('404.html'), 404
-
-
-

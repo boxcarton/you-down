@@ -8,9 +8,11 @@ from you_down.models import Event
 
 def create_sample_db_entry(api_endpoint, payload):
 	url = 'http://localhost:5000/' + api_endpoint
-	r = requests.post(url, data=json.dumps(payload), headers={'Content-Type': 'application/json'})
+	r = requests.post(url, 
+					data=json.dumps(payload),
+					headers={'Content-Type': 'application/json'})
 	print r.text
-	
+
 def create_db():
 	db.create_all()
 

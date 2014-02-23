@@ -2,13 +2,11 @@
 
 /* Controllers */
 
-function InviteController($scope) {
- $scope.friends = [
-    { name: 'boyuan', number: 1, selected: true},
-    { name: 'calvin', number: 2, selected: true },
-    { name: 'muksit', number: 3, selected: false },
-    { name: 'yasaman', number: 4, selected: false }
-  ];
+function InviteController($scope, $http) {
+
+  $http.get('data/friends.json').success(function(data){
+    $scope.friends = data;
+  })
 
   var selectedFriends = function() {
     return _.filter($scope.friends, function(f){ return f.selected == true });

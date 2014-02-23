@@ -1,0 +1,42 @@
+{
+	"event":
+		[
+			{
+				"title": "Korean Fried Chicken", 
+				"location": "Bonchon, Arlington",
+				"time": "tomorrow night at 7pm",
+				"attendees": [{"id": 1}, {"id": 2}],
+				"not_attendees": [{"id": 3}]
+			}, 
+			{
+				"title": "dance party", 
+				"location": "Club Flash",
+				"time": "Saturday night at 10pm",
+				"attendees": [{"id": 1}, {"id": 3}],
+				"not_attendees": [{"id": 2}]
+			},
+			{
+				"title": "bball",
+				"location": "Courts on 18th, Admo",
+				"time": "sunday afternoon, 3pm",
+				"attendees": [{"id": 2}, {"id": 3}],
+				"not_attendees": [{"id": 1}]
+			}
+		],
+
+	"account":
+		[
+			{
+				"name": "muksit", 
+				"phone": 4436168515
+			}, 
+			{	
+				"name": "boyuan", 
+				"phone": 4088382471
+			},
+			{
+				"name": "yasaman",
+				"phone": 4127082716
+			}
+		]
+}
