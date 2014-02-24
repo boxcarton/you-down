@@ -13,14 +13,14 @@
 				"location": "Club Flash",
 				"time": "Saturday night at 10pm",
 				"attendees": [{"id": 1}, {"id": 3}],
-				"not_attendees": [{"id": 2}]
+				"not_attendees": [{"id": 4}]
 			},
 			{
 				"title": "bball",
 				"location": "Courts on 18th, Admo",
 				"time": "sunday afternoon, 3pm",
 				"attendees": [{"id": 2}, {"id": 3}],
-				"not_attendees": [{"id": 1}]
+				"not_attendees": [{"id": 5}]
 			}
 		],
 
@@ -37,6 +37,14 @@
 			{
 				"name": "yasaman",
 				"phone": 4127082716
+			},
+			{
+				"name": "calvin",
+				"phone": 5712457258
+			},
+			{
+				"name": "josh",
+				"phone": 4088239830
 			}
 		]
 }

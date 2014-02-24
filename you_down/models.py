@@ -3,7 +3,12 @@ from datetime import datetime
 from you_down.core import db
 from you_down import app
 
-event_account = db.Table('event_account',
+attended_event_account = db.Table('attended_event_account',
+    db.Column('event_id', db.Integer, db.ForeignKey('event.id')),
+    db.Column('account_id', db.Integer, db.ForeignKey('account.id'))
+)
+
+not_attended_event_account = db.Table('not_attended_event_account',
     db.Column('event_id', db.Integer, db.ForeignKey('event.id')),
     db.Column('account_id', db.Integer, db.ForeignKey('account.id'))
 )
@@ -14,9 +19,9 @@ class Event(db.Model):
 	location = db.Column(db.Text)
 	time = db.Column(db.Text)
 
-	attendees = db.relationship('Account', secondary=event_account,
+	attendees = db.relationship('Account', secondary=attended_event_account,
 		backref=db.backref('attended', lazy='dynamic'))
-	not_attendees = db.relationship('Account', secondary=event_account,
+	not_attendees = db.relationship('Account', secondary=not_attended_event_account,
 		backref=db.backref('not_attended', lazy='dynamic'))
 
 	def __init__(self, title, location, time):

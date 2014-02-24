@@ -2,14 +2,16 @@
 
 /* Controllers */
 
-function InviteController($scope, $http) {
+function InviteController($scope, Friend) {
 
-  $http.get('data/friends.json').success(function(data){
-    $scope.friends = data;
-  })
+  Friend.get({}, function(friends) {
+    $scope.friends = friends.objects;
+  });
 
   var selectedFriends = function() {
-    return _.filter($scope.friends, function(f){ return f.selected == true });
+    return _.filter($scope.friends, function(f){
+      return f.selected == true
+    });
   }
 
   $scope.invite = function invite() {

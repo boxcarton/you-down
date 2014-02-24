@@ -3,7 +3,7 @@
 angular.module('youDownServices', ['ngResource'])
 
 .factory('Event', function($resource) {
-	return $resource('data/event/:eventId', {}, {
+	return $resource('/api/event/:eventId', {}, {
 		query: {
 			method: 'GET',
 			params: { eventId: '' },
@@ -13,10 +13,10 @@ angular.module('youDownServices', ['ngResource'])
 })
 
 .factory('Friend', function($resource) {
-	return $resource('data/:friendId.json', {}, {
+	return $resource('/api/account/:accountId', {}, {
 		query: {
 			method: 'GET',
-			params:{friendId:'friends'},
+			params:{ accountId: ''},
 			isArray: true
 		}
 	});
