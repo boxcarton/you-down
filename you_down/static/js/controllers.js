@@ -44,7 +44,6 @@ function FriendListController($scope, Restangular) {
 
 }
 
-
 function EventDetailController($scope, $routeParams, Event) {
 
 }
