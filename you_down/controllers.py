@@ -12,13 +12,17 @@ from you_down.models import *
 
 for model_name in app.config['API_MODELS']:
 	model_class = app.config['API_MODELS'][model_name]
-	api_manager.create_api(model_class, methods=['GET', 'POST'])
+	api_manager.create_api(model_class, methods=['GET', 'POST', 'PUT', 'DELETE'])
 
 session = api_manager.session
 
+
+@app.route('/', methods=['GET'])
+def root():
+    return redirect(url_for('.basic_pages'))
+
 # routing for basic pages (pass routing onto the Angular app)
-@app.route('/')
-@app.route('/events')
+@app.route('/menu')
 def basic_pages(**kwargs):
 	return make_response(open('you_down/templates/index.html').read())
 

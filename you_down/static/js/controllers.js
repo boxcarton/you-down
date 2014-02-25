@@ -2,32 +2,40 @@
 
 /* Controllers */
 
-function InviteController($scope, Friend) {
+function InviteController($scope, Restangular) {
 
-  Friend.get({}, function(friends) {
-    $scope.friends = friends.objects;
+  var accounts = Restangular.all('account')
+  var events = Restangular.all('event')
+
+  accounts.getList().then(function(friends) {
+    $scope.friends = friends;
   });
 
   var selectedFriends = function() {
-    return _.filter($scope.friends, function(f){
-      return f.selected == true
-    });
+    return _.map(
+              _.filter(
+                $scope.friends, 
+                function(f){ return f.selected == true}
+              ), 
+            function(f) {return _.pick(f,'id')}
+           );
   }
 
   $scope.invite = function invite() {
-    var list = selectedFriends();
-    console.log(list)
+    $scope.event.not_attendees = selectedFriends();
+    events.post($scope.event)
   }
 }
 
-function EventListController($scope, Event) {
-	var eventsQuery = Event.get({}, function(events) {
-		$scope.events = events.objects;
-	});
+function EventListController($scope) {
+
 }
 
+function FriendListController($scope) {
+
+}
+
+
 function EventDetailController($scope, $routeParams, Event) {
-	var eventQuery = Event.get({ eventId: $routeParams.eventId }, function(eventDetail) {
-		$scope.eventDetail = eventDetail;
-	});
+
 }

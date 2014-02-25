@@ -1,13 +1,24 @@
 'use strict';
 
+/*
 angular.module('youDownServices', ['ngResource'])
 
-.factory('Event', function($resource) {
+.factory('GetEvent', function($resource) {
 	return $resource('/api/event/:eventId', {}, {
 		query: {
 			method: 'GET',
 			params: { eventId: '' },
 			isArray: true
+		}
+	});
+})
+
+
+.factory('PostEvent', function($resource) {
+	return $resource('/api/event', {}, {
+		query: {
+			method: 'POST',
+			params: { payload: '' },
 		}
 	});
 })
@@ -21,5 +32,5 @@ angular.module('youDownServices', ['ngResource'])
 		}
 	});
 });
-
+*/
 
