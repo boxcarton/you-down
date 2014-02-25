@@ -1,1 +1,15 @@
-<h3> Here are some friends! </h3>
+<h4> Here are your friends: </h4>
+<table class="table">
+  <thead>
+    <td> id </td>
+    <td> name </td>
+    <td> phone </td>
+  </thead>
+  <tbody>
+    <tr ng-repeat="friend in friends">
+      <td>{{friend.id}}</td>
+      <td>{{friend.name}}</td>
+      <td>{{friend.phone}}
+    </tr>
+  </tbody>
+</table>

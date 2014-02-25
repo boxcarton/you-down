@@ -1,1 +1,31 @@
-<h4> Here are some events </h4>
+<h4> Here are your events: </h4>
+<div>
+  <div ng-repeat="event in events">
+    <h5>{{event.title}}</h5>
+
+  <table class="table">
+    <thead>
+      <td> location </td>
+      <td> time </td>
+      <td> attending </td>
+      <td> not attending </td>
+    </thead>
+    <tbody>
+      <tr>
+        <td>{{event.location}}</td>
+        <td>{{event.time}}</td>
+        <td>
+            <li ng-repeat="attendee in event.attendees">
+              {{attendee.name}}
+            </li>
+        </td>
+        <td>
+            <li ng-repeat="not_attendee in event.not_attendees">
+              {{not_attendee.name}}
+            </li>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  </div>
+</div>

@@ -16,13 +16,13 @@ for model_name in app.config['API_MODELS']:
 
 session = api_manager.session
 
-
+'''
 @app.route('/', methods=['GET'])
 def root():
     return redirect(url_for('.basic_pages'))
-
+'''
 # routing for basic pages (pass routing onto the Angular app)
-@app.route('/menu')
+@app.route('/')
 def basic_pages(**kwargs):
 	return make_response(open('you_down/templates/index.html').read())
 

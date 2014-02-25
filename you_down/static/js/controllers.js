@@ -27,11 +27,20 @@ function InviteController($scope, Restangular) {
   }
 }
 
-function EventListController($scope) {
-
+function EventListController($scope, Restangular) {
+  var events = Restangular.all('event')
+  events.getList().then(function(events) {
+    $scope.events = events;
+    console.log(events);
+  });
 }
 
-function FriendListController($scope) {
+function FriendListController($scope, Restangular) {
+  var friends = Restangular.all('account')
+  friends.getList().then(function(friends) {
+    $scope.friends = friends;
+    console.log(friends);
+  });
 
 }
 

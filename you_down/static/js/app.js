@@ -7,7 +7,7 @@ var youDownApp = angular.module('YouDown', ['ui.router', 'restangular'])
              $locationProvider, RestangularProvider) {
     $stateProvider
       .state('menu', {
-        url: '/menu',
+        url: '/',
         abstract: true,
         templateUrl: 'static/partials/menu.html'
       })
@@ -23,12 +23,12 @@ var youDownApp = angular.module('YouDown', ['ui.router', 'restangular'])
         templateUrl: 'static/partials/event-list.html',
         controller: 'EventListController'
       })
-      /*
+      
       .state('menu.event-detail', {
         url: '/event/:eventId',
         templateUrl: '/static/partials/event-detail.html',
         controller: 'EventDetailController'
-      })*/
+      })
       
       .state('menu.friends', {
         url: '/friends',
@@ -36,8 +36,15 @@ var youDownApp = angular.module('YouDown', ['ui.router', 'restangular'])
         controller: 'FriendListController'
       })
 
+      .state('menu.friend-detail', {
+        url: '/friend/:friendId',
+        templateUrl: '/static/partials/friend-detail.html',
+        controller: 'FriendDetailController'
+      })
+
+
     // if none of the above states are matched, use this as the fallback
-    //$urlRouterProvider.otherwise('/menu/invite');
+    $urlRouterProvider.otherwise('/');
     //$locationProvider.html5Mode(true);
 
     RestangularProvider.setBaseUrl('/api'); 
@@ -59,5 +66,6 @@ var youDownApp = angular.module('YouDown', ['ui.router', 'restangular'])
   }])
 
   .run(['$state', function ($state) {
+    //go here initially
     $state.transitionTo('menu.invite'); 
   }]);
