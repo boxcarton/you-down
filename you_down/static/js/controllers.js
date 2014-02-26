@@ -31,7 +31,6 @@ function EventListController($scope, Restangular) {
   var events = Restangular.all('event')
   events.getList().then(function(events) {
     $scope.events = events;
-    console.log(events);
   });
 }
 
@@ -39,11 +38,11 @@ function FriendListController($scope, Restangular) {
   var friends = Restangular.all('account')
   friends.getList().then(function(friends) {
     $scope.friends = friends;
-    console.log(friends);
   });
 
 }
 
-function EventDetailController($scope, $routeParams, Event) {
-
+function EventDetailController($scope, $stateParams, Restangular) {
+  $scope.event = Restangular.one('event', $stateParams.eventId).get()
+  console.log($scope.event)
 }
