@@ -1,8 +1,12 @@
 you-down
 ========
 
+The seed app for this app is from:
+https://github.com/rxl/angular-flask
+
+
 1. I highly recommend getting virtualenv and virtualenvwrapper installed
-2. pip install all the necessary libraries
+2. pip install all the necessary libraries: Flask, flask-restless, flask-sqlalchemy, requests
 3. installing postgres: https://gist.github.com/lxneng/741932
 4. run postgres
 5. python runserver.py
