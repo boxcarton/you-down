@@ -43,6 +43,9 @@ def rest_pages(model_name, item_id=None):
 				'you_down/templates/index.html').read())
 	abort(404)
 
+@app.route('/invite/<event_id>')
+def invite():
+	pass
 
 # special file handlers and error handlers
 @app.route('/favicon.ico')

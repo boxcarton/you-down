@@ -3,14 +3,14 @@ from datetime import datetime
 from you_down.core import db
 from you_down import app
 
-attended_event_account = db.Table('attended_event_account',
+attended_event_user = db.Table('attended_event_user',
     db.Column('event_id', db.Integer, db.ForeignKey('event.id')),
-    db.Column('account_id', db.Integer, db.ForeignKey('account.id'))
+    db.Column('user_id', db.Integer, db.ForeignKey('user.id'))
 )
 
-not_attended_event_account = db.Table('not_attended_event_account',
+not_attended_event_user = db.Table('not_attended_event_user',
     db.Column('event_id', db.Integer, db.ForeignKey('event.id')),
-    db.Column('account_id', db.Integer, db.ForeignKey('account.id'))
+    db.Column('user_id', db.Integer, db.ForeignKey('user.id'))
 )
 
 class Event(db.Model):
@@ -19,9 +19,9 @@ class Event(db.Model):
 	location = db.Column(db.Text)
 	time = db.Column(db.Text)
 
-	attendees = db.relationship('Account', secondary=attended_event_account,
+	attendees = db.relationship('User', secondary=attended_event_user,
 		backref=db.backref('attended', lazy='dynamic'))
-	not_attendees = db.relationship('Account', secondary=not_attended_event_account,
+	not_attendees = db.relationship('User', secondary=not_attended_event_user,
 		backref=db.backref('not_attended', lazy='dynamic'))
 
 	def __init__(self, title, location, time):
@@ -32,7 +32,7 @@ class Event(db.Model):
 	def __repr__(self):
 		return '<Event %r>' % self.title
 
-class Account(db.Model):
+class User(db.Model):
 	id = db.Column(db.Integer, primary_key=True)
 	name = db.Column(db.Text)
 	phone = db.Column(db.Text)
@@ -42,11 +42,11 @@ class Account(db.Model):
 		self.phone = phone
 
 	def __repr__(self):
-		return '<Account %r>' % self.name
+		return '<User %r>' % self.name
 
 # models for which we want to create API endpoints
-app.config['API_MODELS'] = { 'event': Event, 'account': Account }
+app.config['API_MODELS'] = { 'event': Event, 'user': User }
 
 # models for which we want to create CRUD-style URL endpoints,
 # and pass the routing onto our AngularJS application
-app.config['CRUD_URL_MODELS'] = { 'event': Event, 'account': Account }
+app.config['CRUD_URL_MODELS'] = { 'event': Event, 'user': User }

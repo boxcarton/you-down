@@ -1,4 +1,28 @@
 {
+	"user":
+		[
+			{
+				"name": "muksit", 
+				"phone": 4436168515
+			}, 
+			{	
+				"name": "boyuan", 
+				"phone": 4088382471
+			},
+			{
+				"name": "yasaman",
+				"phone": 4127082716
+			},
+			{
+				"name": "calvin",
+				"phone": 5712457258
+			},
+			{
+				"name": "josh",
+				"phone": 4088239830
+			}
+		],
+
 	"event":
 		[
 			{
@@ -21,30 +45,6 @@
 				"time": "sunday afternoon, 3pm",
 				"attendees": [{"id": 2}, {"id": 3}],
 				"not_attendees": [{"id": 5}]
-			}
-		],
-
-	"account":
-		[
-			{
-				"name": "muksit", 
-				"phone": 4436168515
-			}, 
-			{	
-				"name": "boyuan", 
-				"phone": 4088382471
-			},
-			{
-				"name": "yasaman",
-				"phone": 4127082716
-			},
-			{
-				"name": "calvin",
-				"phone": 5712457258
-			},
-			{
-				"name": "josh",
-				"phone": 4088239830
 			}
 		]
 }

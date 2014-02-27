@@ -1,0 +1,18 @@
+<h4> Are you down for... </h4>
+<h3> {{event.title}} </h3>
+
+<h5>  at </h5>
+
+<h3> {{event.location}} </h3>
+
+<h5> starting at </h5>
+
+<h3> {{event.time}} </h3>
+
+<h5>  with confirmed </h5>
+
+<h3 ng-repeat="attendee in event.attendees">{{attendee.name}}</h3>
+
+<h6> other invited: </h6>
+
+<h3 ng-repeat="not_attendee in event.not_attendees">{{not_attendee.name}}</h3>

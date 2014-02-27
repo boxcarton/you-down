@@ -29,7 +29,13 @@ var youDownApp = angular.module('YouDown', ['ui.router', 'restangular'])
         templateUrl: '/static/partials/event-detail.html',
         controller: 'EventDetailController'
       })
-      
+
+      .state('event-confirmation', {
+        url: '/confirm/:eventId?userId',
+        templateUrl: '/static/partials/event-confirmation.html',
+        controller: 'EventConfirmationController'
+      })
+
       .state('menu.friends', {
         url: '/friends',
         templateUrl: 'static/partials/friend-list.html',
