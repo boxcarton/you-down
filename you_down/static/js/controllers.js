@@ -3,6 +3,7 @@
 function InviteController($scope, Restangular) {
   var users = Restangular.all('user')
   var events = Restangular.all('event')
+  var invite = Restangular.all('invite')
 
   users.getList().then(function(friends) {
     $scope.friends = friends;
@@ -20,8 +21,10 @@ function InviteController($scope, Restangular) {
 
   $scope.invite = function() {
     $scope.event.not_attendees = selectedFriends();
-    events.post($scope.event);
-  };
+    events.post($scope.event).then(function(newEvent){;
+      invite.post(newEvent);
+    });
+  }
 }
 
 function EventListController($scope, Restangular) {

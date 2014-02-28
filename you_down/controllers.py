@@ -2,7 +2,7 @@ import os
 
 from flask import Flask, request, Response
 from flask import render_template, url_for, redirect, send_from_directory
-from flask import send_file, make_response, abort
+from flask import send_file, make_response, abort, jsonify
 
 from you_down import app
 
@@ -10,11 +10,19 @@ from you_down import app
 from you_down.core import api_manager
 from you_down.models import *
 
+from twilio.rest import TwilioRestClient 
+
 for model_name in app.config['API_MODELS']:
 	model_class = app.config['API_MODELS'][model_name]
 	api_manager.create_api(model_class, methods=['GET', 'POST', 'PUT', 'DELETE'])
 
 session = api_manager.session
+
+ACCOUNT_SID = "ACd89ad7724ff0516b6d980fa1e198c678" 
+AUTH_TOKEN = "84745c9096a1f71d230627784192afe9" 
+ 
+client = TwilioRestClient(ACCOUNT_SID, AUTH_TOKEN) 
+
 
 '''
 @app.route('/', methods=['GET'])
@@ -43,9 +51,29 @@ def rest_pages(model_name, item_id=None):
 				'you_down/templates/index.html').read())
 	abort(404)
 
-@app.route('/invite/<event_id>')
+@app.route('/api/invite', methods=['POST'])
 def invite():
-	pass
+	event_id = request.json['id']
+
+	for friend in request.json['not_attendees']:
+		link = "http://localhost:5000/#/confirm/" + str(event_id) + "?userId=" + str(friend['id'])
+		message = """Hey %s, 
+					 This is Josh.
+					 I'm thinking about %s 
+					 at %s 
+					 starting at %s. 
+					 Are you down?
+					 Go to %s to reply.""" % (friend['name'],
+					 						  request.json['title'],
+					 						  request.json['location'],
+					 						  request.json['time'],
+					 						  link)
+		client.messages.create( 
+			from_="+14085331025",
+			to=friend['phone'],
+			body=message) 
+
+	return jsonify(request.json), 200
 
 # special file handlers and error handlers
 @app.route('/favicon.ico')
