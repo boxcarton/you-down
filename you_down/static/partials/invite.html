@@ -1,10 +1,14 @@
 <h4> Hey I'm thinking ... </h4>
-<form novalidate>
-	<input type="text" ng-model="event.title" placeholder="doing"><br>
-	<input type="text" ng-model="event.location" placeholder="at"><br>
-	<input type="text" ng-model="event.time" placeholder="starting at"><br>
-	with: 
-	<label ng-repeat="friend in friends">
+<form role="form" novalidate>
+  <div class="form-group">
+  	<input type="text" class="form-control" ng-model="event.title" placeholder="doing"><br>
+	<input type="text" class="form-control" ng-model="event.location" placeholder="at"><br>
+	<input type="text" class="form-control" ng-model="event.time" placeholder="starting at"><br>
+  </div>
+
+  with
+  <div class="checkbox" ng-repeat="friend in friends">
+	<label >
 	  <input
 	    type="checkbox"
 	    name="selectedFriends"
@@ -12,7 +16,6 @@
 	    ng-model="friend.selected"
 	  > {{friend.name}}
 	</label>
-
-	<button type="button" class="btn btn-primary" ng-click="invite(event)">You Down?</button>
+  </div>
+  <button type="submit" class="btn btn-primary">Submit</button>
 </form>
-
