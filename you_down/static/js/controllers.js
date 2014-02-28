@@ -20,7 +20,6 @@ function InviteController($scope, Restangular) {
 
   $scope.invite = function() {
     $scope.event.not_attendees = selectedFriends();
-    console.log($scope.event);
     events.post($scope.event);
   };
 }
@@ -46,36 +45,42 @@ function EventDetailController($scope, $stateParams, Restangular) {
 function EventConfirmationController($scope, $stateParams, Restangular) {
   var eventPromise = Restangular.one('event', $stateParams.eventId).get();
   var userId = parseInt($stateParams.userId);
-  $scope.isInvited = false;
-  $scope.attendStatus = "not_attending";
+  getAttendance();
 
-  eventPromise.then(function(event){
-    $scope.event = event;
-    console.log(event);
-    var attendingIds = _.map($scope.event.attendees, function(l){return l.id});
-    var notAttendingIds = _.map($scope.event.not_attendees, function(l){return l.id});
+  function getAttendance() {
+    //make both the attending and not attending lists with current user removed
+    eventPromise.then(function(event){
+      $scope.event = event;
+      
+      //make arrays of just Ids for easier operation
+      var attendingIds = _.map($scope.event.attendees, function(l){return l.id});
+      var notAttendingIds = _.map($scope.event.not_attendees, function(l){return l.id});
 
-    if (_.contains(attendingIds, userId)) {
-      $scope.isInvited = true;
-      $scope.attendStatus = "attending";
-      $scope.user = _.filter($scope.event.attendees,function(a) {return a.id === userId})
-      $scope.event.attendees = _.reject($scope.event.attendees,function(a) {return a.id === userId})
-    }  
+      if (_.contains(attendingIds, userId)) {
+        $scope.isInvited = true;
+        $scope.attendStatus = "attending";
+        $scope.user = _.filter($scope.event.attendees, function(a) {return a.id === userId})[0]
+        $scope.event.attendees = _.reject($scope.event.attendees, function(a) {return a.id === userId})
+      }  else if(_.contains(notAttendingIds, userId)) {
+        $scope.isInvited = true;
+        $scope.attendStatus = "not_attending";
+        $scope.user = _.filter($scope.event.not_attendees,function(a) {return a.id === userId})[0]
+        $scope.event.not_attendees = _.reject($scope.event.not_attendees, function(a) {return a.id === userId})
+      } else {
+        $scope.isInvited = false;
+        $scope.attendStatus = "not_attending";
+      }
+    });
+  }
 
-    if(_.contains(notAttendingIds, userId)) {
-      $scope.isInvited = true;
-      $scope.attendStatus = "not_attending";
-      $scope.user = _.filter($scope.event.attendees,function(a) {return a.id === userId})
-      $scope.event.not_attendees = _.reject($scope.event.not_attendees,function(a) {return a.id === userId})
-    }
-  });
-  
   $scope.updateStatus = function() {
+    //get the most updated state from database to avoid state tracking in code
+    getAttendance(); 
     if($scope.attendStatus === "attending") {
       $scope.event.attendees.push($scope.user)
     } else {
       $scope.event.not_attendees.push($scope.user)
     }
-    console.log($scope.attendStatus)
+    $scope.event.put()
   }
 }
