@@ -1,6 +1,6 @@
 'use strict';
 
-var youDownApp = angular.module('YouDown', ['ui.router', 'restangular'])
+var youDownApp = angular.module('YouDown', ['ui.router', 'restangular', 'ui.bootstrap'])
   .config(['$stateProvider', '$routeProvider', 
            '$locationProvider', 'RestangularProvider',
     function($stateProvider, $urlRouterProvider,
