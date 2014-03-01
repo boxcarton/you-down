@@ -4,7 +4,6 @@ import argparse
 import requests
 
 from you_down.core import db
-from you_down.models import Event
 
 def create_sample_db_entry(api_endpoint, payload):
 	url = 'http://localhost:5000/' + api_endpoint

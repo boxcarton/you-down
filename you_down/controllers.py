@@ -17,11 +17,7 @@ for model_name in app.config['API_MODELS']:
 	api_manager.create_api(model_class, methods=['GET', 'POST', 'PUT', 'DELETE'])
 
 session = api_manager.session
-
-ACCOUNT_SID = "ACd89ad7724ff0516b6d980fa1e198c678" 
-AUTH_TOKEN = "84745c9096a1f71d230627784192afe9" 
- 
-client = TwilioRestClient(ACCOUNT_SID, AUTH_TOKEN) 
+client = TwilioRestClient(app.config['ACCOUNT_SID'], app.config['AUTH_TOKEN']) 
 
 
 '''
@@ -56,18 +52,16 @@ def invite():
 	event_id = request.json['id']
 
 	for friend in request.json['not_attendees']:
-		link = "http://localhost:5000/#/confirm/" + str(event_id) + "?userId=" + str(friend['id'])
-		message = """Hey %s, 
-					 This is Josh.
-					 I'm thinking about %s 
-					 at %s 
-					 starting at %s. 
-					 Are you down?
-					 Go to %s to reply.""" % (friend['name'],
-					 						  request.json['title'],
-					 						  request.json['location'],
-					 						  request.json['time'],
-					 						  link)
+		link = "http://" + app.config['HOST_DOMAIN'] + "/#/confirm/" + \
+				str(event_id) + "?userId=" + str(friend['id'])
+		message = "Hey %s, This is Josh.  " \
+				  "I'm thinking about %s " \
+				  "at %s starting at %s.  " \
+				  "Are you down? Go to %s to reply." % (friend['name'],
+					 					  request.json['title'],
+					 					  request.json['location'],
+					 					  request.json['time'],
+					 					  link)
 		client.messages.create( 
 			from_="+14085331025",
 			to=friend['phone'],
