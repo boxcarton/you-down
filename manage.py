@@ -5,8 +5,7 @@ import requests
 
 from you_down.core import db
 
-
-port = int(os.environ.get('PORT', 5000))
+port = 80
 
 def create_sample_db_entry(api_endpoint, payload):
 	url = 'http://localhost:' + str(port) + '/' + api_endpoint
