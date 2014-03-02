@@ -19,12 +19,6 @@ for model_name in app.config['API_MODELS']:
 session = api_manager.session
 client = TwilioRestClient(app.config['ACCOUNT_SID'], app.config['AUTH_TOKEN']) 
 
-
-'''
-@app.route('/', methods=['GET'])
-def root():
-    return redirect(url_for('.basic_pages'))
-'''
 # routing for basic pages (pass routing onto the Angular app)
 @app.route('/')
 def basic_pages(**kwargs):
@@ -54,7 +48,7 @@ def invite():
 	for friend in request.json['not_attendees']:
 		link = "http://" + app.config['HOST_DOMAIN'] + "/#/confirm/" + \
 				str(event_id) + "?userId=" + str(friend['id'])
-		message = "Hey %s, This is Josh.  " \
+		message = "Hey %s, This is the YouDown app.  " \
 				  "I'm thinking about %s " \
 				  "at %s starting at %s.  " \
 				  "Are you down? Go to %s to reply." % (friend['name'],

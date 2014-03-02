@@ -8,7 +8,7 @@ from you_down.core import db
 port = 80
 
 def create_sample_db_entry(api_endpoint, payload):
-	url = 'http://localhost:' + str(port) + '/' + api_endpoint
+	url = 'http://youdown.herokuapp.com:' + str(port) + '/' + api_endpoint
 	r = requests.post(url, 
 					data=json.dumps(payload),
 					headers={'Content-Type': 'application/json'})
