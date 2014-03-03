@@ -1,8 +1,8 @@
 'use strict';
 
 function InviteController($scope, Restangular) {
-  var users = Restangular.all('user')
-  var events = Restangular.all('event')
+  var users = Restangular.all('users')
+  var events = Restangular.all('events')
   var invite = Restangular.all('invite')
 
   users.getList().then(function(users) {
@@ -29,14 +29,14 @@ function InviteController($scope, Restangular) {
 }
 
 function EventListController($scope, Restangular) {
-  var eventsPromise = Restangular.all('event')
+  var eventsPromise = Restangular.all('events')
   eventsPromise.getList({'results_per_page': 100}).then(function(events) {
     $scope.events = events.reverse();
   });
 }
 
 function EventDetailController($scope, $stateParams, Restangular) {
-  var eventPromise = Restangular.one('event', $stateParams.eventId)
+  var eventPromise = Restangular.one('events', $stateParams.eventId)
   eventPromise.get().then(function(event){
     $scope.event = event;
   })
@@ -47,14 +47,14 @@ function EventDetailController($scope, $stateParams, Restangular) {
 }
 
 function UserListController($scope, Restangular) {
-  var usersPromise = Restangular.all('user')
+  var usersPromise = Restangular.all('users')
   usersPromise.getList({'results_per_page': 100}).then(function(users) {
     $scope.users = users;
   });
 }
 
 function UserDetailController($scope, $stateParams, Restangular) {
-  var userPromise = Restangular.one('user', $stateParams.userId)
+  var userPromise = Restangular.one('users', $stateParams.userId)
   userPromise.get().then(function(user){
     $scope.user = user;
   })
@@ -65,14 +65,14 @@ function UserDetailController($scope, $stateParams, Restangular) {
 }
 
 function AddUserController($scope, Restangular) {
-  var usersPromise = Restangular.all('user');
+  var usersPromise = Restangular.all('users');
   $scope.addUser = function() {
     usersPromise.post($scope.newUser);
   }
 }
 
 function EventConfirmationController($scope, $stateParams, Restangular) {
-  var eventPromise = Restangular.one('event', $stateParams.eventId).get();
+  var eventPromise = Restangular.one('events', $stateParams.eventId).get();
   var userId = parseInt($stateParams.userId);
   getAttendance();
 

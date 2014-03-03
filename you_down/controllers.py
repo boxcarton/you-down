@@ -49,12 +49,9 @@ def invite():
 		link = "http://" + app.config['HOST_DOMAIN'] + "/#/confirm/" + \
 				str(event_id) + "?userId=" + str(user['id'])
 		message = "Hey %s, This is the YouDown app.  " \
-				  "I'm thinking about %s " \
-				  "at %s starting at %s.  " \
+				  "I'm thinking about %s." \
 				  "Are you down? Go to %s to reply." % (user['name'],
-					 					  request.json['title'],
-					 					  request.json['location'],
-					 					  request.json['time'],
+					 					  request.json['info'],
 					 					  link)
 		client.messages.create( 
 			from_="+14085331025",

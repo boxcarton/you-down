@@ -25,7 +25,7 @@ var youDownApp = angular.module('YouDown', ['ui.router', 'restangular', 'ui.boot
       })
       
       .state('menu.event-detail', {
-        url: '/event/:eventId',
+        url: '/events/:eventId',
         templateUrl: '/static/partials/event-detail.html',
         controller: 'EventDetailController'
       })
@@ -43,7 +43,7 @@ var youDownApp = angular.module('YouDown', ['ui.router', 'restangular', 'ui.boot
       })
 
       .state('menu.user-detail', {
-        url: '/user/:userId',
+        url: '/users/:userId',
         templateUrl: '/static/partials/user-detail.html',
         controller: 'UserDetailController'
       })

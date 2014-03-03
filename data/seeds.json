@@ -1,48 +1,54 @@
 {
-	"user":
+	"users":
 		[
-			{
-				"name": "muksit", 
-				"phone": 4436168515
-			}, 
 			{	
-				"name": "boyuan", 
+				"name": "Boyuan", 
 				"phone": 4088382471
 			},
 			{
-				"name": "yasaman",
+				"name": "Yasaman",
 				"phone": 4127082716
 			},
 			{
-				"name": "calvin",
+				"name": "Muksit", 
+				"phone": 4436168515
+			},
+			{
+				"name": "Calvin",
 				"phone": 5712457258
 			},
 			{
-				"name": "josh",
+				"name": "Josh",
 				"phone": 4088239830
+			},
+			{
+				"name": "Jeff",
+				"phone": 4088239830
+			},
+			{
+				"name": "Kristine",
+				"phone": 4088239830
+			},
+			{
+				"name": "Preshant",
+				"phone": 4125809826
 			}
 		],
 
-	"event":
+	"events":
 		[
 			{
-				"title": "Korean Fried Chicken", 
-				"location": "Bonchon, Arlington",
-				"time": "tomorrow night at 7pm",
+				"info": "Bonchon tomorrow night around 6:30pm", 
 				"attendees": [{"id": 1}, {"id": 2}],
 				"not_attendees": [{"id": 3}]
 			}, 
 			{
-				"title": "dance party", 
-				"location": "Club Flash",
-				"time": "Saturday night at 10pm",
+				"info": "Dance party at flash Saturday night", 
 				"attendees": [{"id": 1}, {"id": 3}],
 				"not_attendees": [{"id": 4}]
 			},
 			{
-				"title": "bball",
-				"location": "Courts on 18th, Admo",
-				"time": "sunday afternoon, 3pm",
+				"info": "Bball at adams morgan, sunday 3pm",
 				"attendees": [{"id": 2}, {"id": 3}],
 				"not_attendees": [{"id": 5}]
 			}
