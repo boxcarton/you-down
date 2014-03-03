@@ -12,13 +12,14 @@
 <h4>with: </h4>
 
 <div id="invite-list" class="btn-group-vertical btn-group btn-group-lg">
-  <button ng-repeat="user in users"
+  <button id="invite-friend-button"
+    ng-repeat="user in users"
     type="button"
     class="btn btn-default"
     ng-model="user.selected" btn-checkbox> {{user.name}} </button>
 </div>
 
 <hr>
-<button id="invite-button" type="button" 
+<button id="send-invite-button" type="button" 
         class="btn btn-primary btn-lg" ng-click="invite()" 
         ui-sref="menu.events" style="margin-bottom: 5%">You Down?</button>

@@ -78,5 +78,5 @@ var youDownApp = angular.module('YouDown', ['ui.router', 'restangular', 'ui.boot
 
   .run(['$state', function ($state) {
     //go here initially
-    $state.transitionTo('menu.invite'); 
+    $state.transitionTo('menu.events'); 
   }]);

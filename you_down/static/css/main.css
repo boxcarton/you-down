@@ -1,10 +1,25 @@
-#invite-list {
-	width: 60%;
-	margin-left: 20%;
-	margin-right: 20%;
+#menu-button {
+	margin-left: 2.5%;
 }
 
-#invite-button {
+#add-invite-button{
+	padding: 0px 13px 8px 14px;
+	margin-top: 8px;
+	margin-right: 15px;
+	margin-bottom: 8px;
+	background-color: transparent;;
+}
+#invite-list {
+	-webkit-columns: 2; /* Safari and Chrome */
+	-moz-columns: 2; /* Firefox */
+	width: 100%;
+}
+
+#send-invite-button {
 	height: 60px;
 	width: 100%;
+}
+
+#invite-friend-button {
+	margin-top: 0px;
 }
