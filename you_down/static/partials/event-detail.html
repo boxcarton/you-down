@@ -4,11 +4,11 @@
 
 <div class="row" style="margin-top:10%">
   <div class="col-md-6 col-xs-6">
-    <h4> attending </h4>
+    <h4> attending: </h4>
     <h5 ng-repeat="attendee in event.attendees">{{attendee.name}}</h5>
   </div>
   <div class="col-md-6 col-xs-6">
-    <h4> invited </h4>
+    <h4> invited: </h4>
     <h5 ng-repeat="not_attendee in event.not_attendees">{{not_attendee.name}}</h5>
   </div>
 </div>
