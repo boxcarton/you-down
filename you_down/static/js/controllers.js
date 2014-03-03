@@ -5,15 +5,15 @@ function InviteController($scope, Restangular) {
   var events = Restangular.all('event')
   var invite = Restangular.all('invite')
 
-  users.getList().then(function(friends) {
-    $scope.friends = _.each(friends, function(f){f.selected = false});
+  users.getList().then(function(users) {
+    $scope.users = _.each(users, function(f){f.selected = false});
 
   });
 
-  var selectedFriends = function() {
+  var selectedUsers = function() {
     return _.map(
               _.filter(
-                $scope.friends, 
+                $scope.users, 
                 function(f){ return f.selected == true}
               ), 
             function(f) {return _.pick(f,'id')}
@@ -21,9 +21,7 @@ function InviteController($scope, Restangular) {
   };
 
   $scope.invite = function() {
-    console.log(selectedFriends());
-    $scope.event.not_attendees = selectedFriends();
-
+    $scope.event.not_attendees = selectedUsers();
     events.post($scope.event).then(function(newEvent){
       invite.post(newEvent);
     });
@@ -37,20 +35,6 @@ function EventListController($scope, Restangular) {
   });
 }
 
-function FriendListController($scope, Restangular) {
-  var friendsPromise = Restangular.all('user')
-  friendsPromise.getList({'results_per_page': 100}).then(function(friends) {
-    $scope.friends = friends;
-  });
-}
-
-function AddFriendController($scope, Restangular) {
-  var friendsPromise = Restangular.all('user');
-  $scope.addFriend = function() {
-    friendsPromise.post($scope.newFriend);
-  }
-}
-
 function EventDetailController($scope, $stateParams, Restangular) {
   var eventPromise = Restangular.one('event', $stateParams.eventId)
   eventPromise.get().then(function(event){
@@ -59,6 +43,31 @@ function EventDetailController($scope, $stateParams, Restangular) {
 
   $scope.deleteEvent = function(){
     $scope.event.remove();
+  }
+}
+
+function UserListController($scope, Restangular) {
+  var usersPromise = Restangular.all('user')
+  usersPromise.getList({'results_per_page': 100}).then(function(users) {
+    $scope.users = users;
+  });
+}
+
+function UserDetailController($scope, $stateParams, Restangular) {
+  var userPromise = Restangular.one('user', $stateParams.userId)
+  userPromise.get().then(function(user){
+    $scope.user = user;
+  })
+
+  $scope.deleteUser = function(){
+    $scope.user.remove();
+  }
+}
+
+function AddUserController($scope, Restangular) {
+  var usersPromise = Restangular.all('user');
+  $scope.addUser = function() {
+    usersPromise.post($scope.newUser);
   }
 }
 

@@ -45,20 +45,20 @@ def rest_pages(model_name, item_id=None):
 def invite():
 	event_id = request.json['id']
 
-	for friend in request.json['not_attendees']:
+	for user in request.json['not_attendees']:
 		link = "http://" + app.config['HOST_DOMAIN'] + "/#/confirm/" + \
-				str(event_id) + "?userId=" + str(friend['id'])
+				str(event_id) + "?userId=" + str(user['id'])
 		message = "Hey %s, This is the YouDown app.  " \
 				  "I'm thinking about %s " \
 				  "at %s starting at %s.  " \
-				  "Are you down? Go to %s to reply." % (friend['name'],
+				  "Are you down? Go to %s to reply." % (user['name'],
 					 					  request.json['title'],
 					 					  request.json['location'],
 					 					  request.json['time'],
 					 					  link)
 		client.messages.create( 
 			from_="+14085331025",
-			to=friend['phone'],
+			to=user['phone'],
 			body=message) 
 
 	return jsonify(request.json), 200

@@ -10,12 +10,12 @@
 <h4>with: </h4>
 
 <div class="btn-group-vertical btn-group btn-group-lg" id="invite-list">
-  <button ng-repeat="friend in friends"
+  <button ng-repeat="user in users"
     type="button"
     class="btn btn-default"
-    ng-model="friend.selected" btn-checkbox> {{friend.name}} </button>
+    ng-model="user.selected" btn-checkbox> {{user.name}} </button>
 </div>
 
 <hr>
 <button id="invite-button" type="button" class="btn btn-primary btn-lg" 
-		ng-click="invite()" ui-sref="menu.events">You Down?</button>
+		ng-click="invite()" ui-sref="menu.events" style="margin-bottom: 5%">You Down?</button>

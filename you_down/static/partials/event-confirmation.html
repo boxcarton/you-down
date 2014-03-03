@@ -1,15 +1,20 @@
-<h4> Are you down for... </h4>
-<h3> {{event.title}} </h3>
+<h3> Are you down for... </h3>
 
-<h5>  at </h5>
+<h2> {{event.title}} </h2>
+<h4> {{event.location}} </h4>
+<h4> {{event.time}} </h4>
 
-<h3> {{event.location}} </h3>
+<div class="row" style="margin-top:10%">
+  <div class="col-md-6 col-xs-6">
+    <h4> attending </h4>
+    <h5 ng-repeat="attendee in event.attendees">{{attendee.name}}</h5>
+  </div>
+  <div class="col-md-6 col-xs-6">
+    <h4> invited </h4>
+    <h5 ng-repeat="not_attendee in event.not_attendees">{{not_attendee.name}}</h5>
+  </div>
+</div>
 
-<h5> starting at </h5>
-
-<h3> {{event.time}} </h3>
-
-<h5>  with confirmed </h5>
 
 <h3 ng-repeat="attendee in event.attendees">{{attendee.name}}</h3>
 

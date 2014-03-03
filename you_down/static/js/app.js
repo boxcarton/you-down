@@ -36,22 +36,22 @@ var youDownApp = angular.module('YouDown', ['ui.router', 'restangular', 'ui.boot
         controller: 'EventConfirmationController'
       })
 
-      .state('menu.friends', {
-        url: '/friends',
-        templateUrl: 'static/partials/friend-list.html',
-        controller: 'FriendListController'
+      .state('menu.users', {
+        url: '/users',
+        templateUrl: 'static/partials/user-list.html',
+        controller: 'UserListController'
       })
 
-      .state('menu.friend-detail', {
-        url: '/friend/:friendId',
-        templateUrl: '/static/partials/friend-detail.html',
-        controller: 'FriendDetailController'
+      .state('menu.user-detail', {
+        url: '/user/:userId',
+        templateUrl: '/static/partials/user-detail.html',
+        controller: 'UserDetailController'
       })
 
-      .state('menu.add-friend', {
-        url: '/addfriend',
-        templateUrl: '/static/partials/add-friend.html',
-        controller: 'AddFriendController'
+      .state('menu.add-user', {
+        url: '/adduser',
+        templateUrl: '/static/partials/add-user.html',
+        controller: 'AddUserController'
       })
 
     // if none of the above states are matched, use this as the fallback
