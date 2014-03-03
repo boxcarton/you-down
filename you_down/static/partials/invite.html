@@ -1,15 +1,21 @@
 <h3> Hey I'm thinking ... </h3>
 <form role="form" novalidate>
   <div class="form-group">
-  	<input type="text" class="form-control input-lg" ng-model="event.title" placeholder="doing"><br>
-	<input type="text" class="form-control input-lg" ng-model="event.location" placeholder="at"><br>
-	<input type="text" class="form-control input-lg" ng-model="event.time" placeholder="starting at"><br>
+    <input type="text" class="form-control input-lg" 
+           ng-model="event.title" placeholder="doing">
+    <br>
+    <input type="text" class="form-control input-lg" 
+           ng-model="event.location" placeholder="at">
+    <br>
+    <input type="text" class="form-control input-lg"
+           ng-model="event.time" placeholder="starting at">
+    <br>
   </div>
 </form>
 
 <h4>with: </h4>
 
-<div class="btn-group-vertical btn-group btn-group-lg" id="invite-list">
+<div id="invite-list" class="btn-group-vertical btn-group btn-group-lg">
   <button ng-repeat="user in users"
     type="button"
     class="btn btn-default"
@@ -17,5 +23,6 @@
 </div>
 
 <hr>
-<button id="invite-button" type="button" class="btn btn-primary btn-lg" 
-		ng-click="invite()" ui-sref="menu.events" style="margin-bottom: 5%">You Down?</button>
+<button id="invite-button" type="button" 
+        class="btn btn-primary btn-lg" ng-click="invite()" 
+        ui-sref="menu.events" style="margin-bottom: 5%">You Down?</button>
