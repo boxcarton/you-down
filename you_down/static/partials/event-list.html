@@ -7,21 +7,25 @@
     <td> time </td>
     <td> attending </td>
     <td> not attending </td>
+    <td> details </td>
   </thead>
   <tbody>
     <tr ng-repeat="event in events">
-      <td><a ui-sref="menu.event-detail({eventId: event.id})">{{event.title}}</a></td>
+      <td>{{event.title}}</td>
       <td>{{event.location}}</td>
       <td>{{event.time}}</td>
       <td>
-          <ul ng-repeat="attendee in event.attendees">
-            {{attendee.name}}
-          </ul>
+        <ul style="padding-left: 0px" ng-repeat="attendee in event.attendees">
+          {{attendee.name}}
+        </ul>
       </td>
       <td>
-          <ul ng-repeat="not_attendee in event.not_attendees">
-            {{not_attendee.name}}
-          </ul>
+        <ul style="padding-left: 0px" ng-repeat="not_attendee in event.not_attendees">
+          {{not_attendee.name}}
+        </ul>
+      </td>
+      <td>
+        <button class="btn btn-info" ui-sref="menu.event-detail({eventId: event.id})"> more info > </button>
       </td>
     </tr>
   </tbody>

@@ -48,6 +48,11 @@ var youDownApp = angular.module('YouDown', ['ui.router', 'restangular', 'ui.boot
         controller: 'FriendDetailController'
       })
 
+      .state('menu.add-friend', {
+        url: '/addfriend',
+        templateUrl: '/static/partials/add-friend.html',
+        controller: 'AddFriendController'
+      })
 
     // if none of the above states are matched, use this as the fallback
     $urlRouterProvider.otherwise('/');

@@ -21,7 +21,7 @@ function InviteController($scope, Restangular) {
 
   $scope.invite = function() {
     $scope.event.not_attendees = selectedFriends();
-    events.post($scope.event).then(function(newEvent){;
+    events.post($scope.event).then(function(newEvent){
       invite.post(newEvent);
     });
   }
@@ -30,7 +30,7 @@ function InviteController($scope, Restangular) {
 function EventListController($scope, Restangular) {
   var eventsPromise = Restangular.all('event')
   eventsPromise.getList().then(function(events) {
-    $scope.events = events;
+    $scope.events = events.reverse();
   });
 }
 
@@ -41,8 +41,22 @@ function FriendListController($scope, Restangular) {
   });
 }
 
+function AddFriendController($scope, Restangular) {
+  var friendsPromise = Restangular.all('user');
+  $scope.addFriend = function() {
+    friendsPromise.post($scope.newFriend);
+  }
+}
+
 function EventDetailController($scope, $stateParams, Restangular) {
-  $scope.eventPromise = Restangular.one('event', $stateParams.eventId).get()
+  var eventPromise = Restangular.one('event', $stateParams.eventId)
+  eventPromise.get().then(function(event){
+    $scope.event = event;
+  })
+
+  $scope.deleteEvent = function(){
+    $scope.event.remove();
+  }
 }
 
 function EventConfirmationController($scope, $stateParams, Restangular) {
