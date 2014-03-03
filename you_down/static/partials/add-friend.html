@@ -1,0 +1,9 @@
+<h4> Add a Friend! </h4>
+<form role="form" novalidate>
+  <div class="form-group">
+  	<input type="text" class="form-control" ng-model="newFriend.name" placeholder="name"><br>
+	<input type="text" class="form-control" ng-model="newFriend.phone" placeholder="phone, format: xxxxxxxxxx"><br>
+  </div>
+
+  <button type="button" class="btn btn-success" ng-click="addFriend()" ui-sref="menu.friends">add</button>
+</form>
