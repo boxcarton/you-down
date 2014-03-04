@@ -2,9 +2,13 @@
 
 <div class="row" style="margin-top:7%">
   <div class="col-md-6 col-xs-6">
+  	<h3> Is Down: </h3>
+  	<h4 ng-repeat="attendee in event.attendees">{{attendee.name}}</h4>
+  </div>
+
+  <div class="col-md-6 col-xs-6">
     <h3> Invited: </h3>
-    <h5 ng-repeat="attendee in event.attendees">{{attendee.name}}</h5>
-    <h5 ng-repeat="not_attendee in event.not_attendees">{{not_attendee.name}}</h5>
+    <h4 ng-repeat="not_attendee in event.not_attendees">{{not_attendee.name}}</h4>
   </div>
 </div>
 
