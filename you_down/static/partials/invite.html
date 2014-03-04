@@ -9,14 +9,27 @@
   </div>
 </form>
 
-<h4>with: </h4>
+<h4>with:</h4>
 
-<div id="invite-list" class="btn-group-vertical btn-group btn-group-lg">
-  <button id="invite-friend-button"
-    ng-repeat="user in users"
-    type="button"
-    class="btn btn-default"
-    ng-model="user.selected" btn-checkbox> {{user.name}} </button>
+<div id="invite-list" class="row">
+  <div style="padding-right: 0px" class="col-xs-6 col-sm-6 col-md-6">
+    <div style="width:100%" class="btn-group-vertical btn-group btn-group-lg">
+      <button id="invite-friend-button"
+        ng-repeat="user in users_1"
+        type="button"
+        class="btn btn-default"
+        ng-model="user.selected" btn-checkbox> {{user.name}} </button>
+    </div>
+  </div>
+  <div style="padding-left: 0px" class="col-xs-6 col-sm-6 col-md-6">
+    <div style="width:100%" class="btn-group-vertical btn-group btn-group-lg">
+      <button id="invite-friend-button"
+        ng-repeat="user in users_2"
+        type="button"
+        class="btn btn-default"
+        ng-model="user.selected" btn-checkbox> {{user.name}} </button>
+    </div>
+  </div>
 </div>
 
 <hr>

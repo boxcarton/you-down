@@ -10,9 +10,7 @@
 	background-color: transparent;;
 }
 #invite-list {
-	-webkit-columns: 2; /* Safari and Chrome */
-	-moz-columns: 2; /* Firefox */
-	width: 100%;
+	
 }
 
 #send-invite-button {
