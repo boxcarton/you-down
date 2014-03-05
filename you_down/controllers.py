@@ -48,9 +48,9 @@ def invite():
 	for user in request.json['not_attendees']:
 		link = "http://" + app.config['HOST_DOMAIN'] + "/#/confirm/" + \
 				str(event_id) + "?userId=" + str(user['id'])
-		message = "Hey %s, This is the YouDown app.  " \
+		message = "Hey %s, This is Josh.  " \
 				  "I'm thinking about %s." \
-				  "Are you down? Go to %s to reply." % (user['name'],
+				  "Are you down? Reply at %s." % (user['name'],
 					 					  request.json['info'],
 					 					  link)
 		client.messages.create( 
