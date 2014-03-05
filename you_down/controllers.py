@@ -49,7 +49,7 @@ def invite():
 		link = "http://" + app.config['HOST_DOMAIN'] + "/#/confirm/" + \
 				str(event_id) + "?userId=" + str(user['id'])
 		message = "Hey %s, This is Josh.  " \
-				  "I'm thinking about %s." \
+				  "I'm thinking about %s.  " \
 				  "Are you down? Reply at %s." % (user['name'],
 					 					  request.json['info'],
 					 					  link)
