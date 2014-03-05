@@ -5,8 +5,8 @@ import requests
 
 from you_down.core import db
 
-host = 'http://youdown.herokuapp.com:80'
-#host = 'http://localhost:5000'
+#host = 'http://youdown.herokuapp.com:80'
+host = 'http://localhost:5000'
 
 def create_sample_db_entry(api_endpoint, payload):
 	url = host + '/' + api_endpoint
