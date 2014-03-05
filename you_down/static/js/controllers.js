@@ -103,12 +103,12 @@ function EventConfirmationController($scope, $stateParams, Restangular) {
         $scope.isInvited = true;
         $scope.attendStatus = "attending";
         $scope.user = _.filter($scope.event.attendees, function(a) {return a.id === userId})[0]
-        $scope.event.attendees = _.reject($scope.event.attendees, function(a) {return a.id === userId})
+
       }  else if(_.contains(notAttendingIds, userId)) {
         $scope.isInvited = true;
         $scope.attendStatus = "not_attending";
         $scope.user = _.filter($scope.event.not_attendees,function(a) {return a.id === userId})[0]
-        $scope.event.not_attendees = _.reject($scope.event.not_attendees, function(a) {return a.id === userId})
+        
       } else {
         $scope.isInvited = false;
         $scope.attendStatus = "not_attending";
@@ -118,11 +118,13 @@ function EventConfirmationController($scope, $stateParams, Restangular) {
 
   $scope.updateStatus = function() {
     //get the most updated state from database to avoid state tracking in code
-    getAttendance(); 
+    getAttendance();  
     if($scope.attendStatus === "attending") {
+      $scope.event.attendees = _.reject($scope.event.attendees, function(a) {return a.id === userId})
       $scope.event.attendees.push($scope.user)
     } else {
       $scope.event.not_attendees.push($scope.user)
+      $scope.event.not_attendees = _.reject($scope.event.not_attendees, function(a) {return a.id === userId})  
     }
     $scope.event.put()
   }

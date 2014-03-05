@@ -31,16 +31,17 @@
   <br>
 
   <h2> {{event.info}} </h2>
-
+  <h3> Created by: Josh </h3>
+  <hr>
   <div class="row" style="margin-top:7%">
     <div class="col-md-6 col-xs-6">
-      <h4> Invited: </h4>
+      <h4> Who is nvited: </h4>
       <h5 ng-repeat="attendee in event.attendees">{{attendee.name}}</h5>
       <h5 ng-repeat="not_attendee in event.not_attendees">{{not_attendee.name}}</h5>
     </div>
   </div>
-
-  <h3> You are: <span>{{attendStatus}}</span></h3>
+  <hr>
+  <h3> You are now: <span>{{attendStatus}}</span></h3>
   <div style="width: 100%" class="btn-group" ng-show="isInvited">
     <button style="width: 50%" type="button" class="btn btn-primary btn-lg" ng-model="attendStatus"
         btn-radio="'attending'" ng-click="updateStatus()">Attending</button>

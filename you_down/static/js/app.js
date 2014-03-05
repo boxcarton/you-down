@@ -12,7 +12,7 @@ var youDownApp = angular.module('YouDown', ['ui.router', 'restangular', 'ui.boot
         templateUrl: 'static/partials/menu.html'
       })
       
-      .state('menu.invite', {
+      .state('menu.secret_invite', {
         url: '/secretinvite',
         templateUrl: 'static/partials/invite.html',
         controller: 'InviteController'
