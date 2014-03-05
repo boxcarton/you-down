@@ -32,22 +32,13 @@ function InviteController($scope, Restangular) {
            ); 
   }
 
-  var getHost = function() {
-    if ($scope.host != null) {
-      $scope.host = $scope.host.toLowerCase();
-      return $scope.host.replace(/\w\S*/g, function(txt){
-          return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
-        });
-    }
-  }
-
   $scope.invite = function() {
     var selected = getSelectedUsers()
     $scope.event.not_attendees = formatSelectedUsers(selected);
     console.log($scope.event)
-    /*events.post($scope.event).then(function(newEvent){
+    events.post($scope.event).then(function(newEvent){
       invite.post(newEvent);
-    });*/
+    });
   }
 }
 
