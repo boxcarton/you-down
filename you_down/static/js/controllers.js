@@ -35,7 +35,6 @@ function InviteController($scope, Restangular) {
   $scope.invite = function() {
     var selected = getSelectedUsers()
     $scope.event.not_attendees = formatSelectedUsers(selected);
-    console.log($scope.event)
     events.post($scope.event).then(function(newEvent){
       invite.post(newEvent);
     });
