@@ -5,21 +5,23 @@ function InviteController($scope, Restangular) {
   var events = Restangular.all('events')
   var invite = Restangular.all('invite')
 
-  users.getList().then(function(users) {
+  users.getList({'results_per_page': 100}).then(function(users) {
     $scope.users = _.each(users, function(f){f.selected = false});
 
     //hack to split users into two columns
     var half_length = Math.ceil($scope.users.length / 2);  
     $scope.users_1 = $scope.users.slice(0, half_length);
     $scope.users_2 = $scope.users.slice(half_length, $scope.users.length);
+    console.log($scope.users_1)
+    console.log($scope.users_2)
   });
 
   var getSelectedUsers = function() {
     var s1 = _.filter($scope.users_1, 
-                       function(f){ return f.selected == true}
+                       function(f){ return f.selected == true }
                      );
     var s2 = _.filter($scope.users_2, 
-                       function(f){ return f.selected == true}
+                       function(f){ return f.selected == true }
                      );
     s1.push.apply(s1, s2);
 
@@ -102,12 +104,12 @@ function EventConfirmationController($scope, $stateParams, Restangular) {
         $scope.isInvited = true;
         $scope.attendStatus = "attending";
         $scope.user = _.filter($scope.event.attendees, function(a) {return a.id === userId})[0]
-
+        $scope.event.attendees = _.reject($scope.event.attendees, function(a) {return a.id === userId})
       }  else if(_.contains(notAttendingIds, userId)) {
         $scope.isInvited = true;
         $scope.attendStatus = "not_attending";
         $scope.user = _.filter($scope.event.not_attendees,function(a) {return a.id === userId})[0]
-        
+        $scope.event.not_attendees = _.reject($scope.event.not_attendees, function(a) {return a.id === userId})  
       } else {
         $scope.isInvited = false;
         $scope.attendStatus = "not_attending";
@@ -117,14 +119,18 @@ function EventConfirmationController($scope, $stateParams, Restangular) {
 
   $scope.updateStatus = function() {
     //get the most updated state from database to avoid state tracking in code
-    getAttendance();  
+    getAttendance();
+    console.log($scope.attendStatus);
     if($scope.attendStatus === "attending") {
-      $scope.event.attendees = _.reject($scope.event.attendees, function(a) {return a.id === userId})
+
+      
       $scope.event.attendees.push($scope.user)
     } else {
       $scope.event.not_attendees.push($scope.user)
-      $scope.event.not_attendees = _.reject($scope.event.not_attendees, function(a) {return a.id === userId})  
+      
     }
+    console.log($scope.event.attendees);
+    console.log($scope.event.not_attendees);
     $scope.event.put()
   }
 }
