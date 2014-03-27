@@ -1,5 +1,27 @@
 'use strict';
 
+function RegisterController($scope, Restangular) {
+  var register = Restangular.all('register_user')
+  $scope.register = function() {
+    if ($scope.registerForm.$valid) {
+      register.post($scope.newUser).then(function() {
+        $scope.message = "Successfully registered";
+      }, function() {
+        $scope.message = "There was an error registering you";
+      });
+    }
+  };
+}
+
+function LoginController($scope, Restangular) {
+  var register = Restangular.all('login')
+  $scope.login = function() {
+    if ($scope.loginForm.$valid) {
+      console.log($scope.user)
+    }
+  };
+}
+
 function InviteController($scope, Restangular) {
   var users = Restangular.all('users')
   var events = Restangular.all('events')
@@ -12,8 +34,6 @@ function InviteController($scope, Restangular) {
     var half_length = Math.ceil($scope.users.length / 2);  
     $scope.users_1 = $scope.users.slice(0, half_length);
     $scope.users_2 = $scope.users.slice(half_length, $scope.users.length);
-    console.log($scope.users_1)
-    console.log($scope.users_2)
   });
 
   var getSelectedUsers = function() {
@@ -86,7 +106,7 @@ function AddUserController($scope, Restangular) {
   }
 }
 
-function EventConfirmationController($scope, $stateParams, Restangular) {
+function EventConfirmController($scope, $stateParams, Restangular) {
   var eventPromise = Restangular.one('events', $stateParams.eventId).get();
   var userId = parseInt($stateParams.userId);
   getAttendance();

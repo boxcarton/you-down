@@ -13,4 +13,3 @@ app.url_map.strict_slashes = False
 import you_down.core
 import you_down.models
 import you_down.controllers
-

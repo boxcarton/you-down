@@ -1,19 +1,37 @@
 'use strict';
 
-var youDownApp = angular.module('YouDown', ['ui.router', 'restangular', 'ui.bootstrap'])
-  .config(['$stateProvider', '$routeProvider', 
-           '$locationProvider', 'RestangularProvider',
-    function($stateProvider, $urlRouterProvider,
-             $locationProvider, RestangularProvider) {
+// store a global with the time auth status last changed. 
+// Used for expiring pages from template cache, jQuery-style.
+var authtime = Date.now();
+
+var youDownApp = angular.module('YouDown', 
+  ['ui.router', 'restangular', 'ui.bootstrap','Authentication'])
+  
+.config(['$stateProvider', '$urlRouterProvider', '$httpProvider',
+                   '$locationProvider', 'RestangularProvider',
+  function($stateProvider, $urlRouterProvider, $httpProvider,
+           $locationProvider, RestangularProvider) {
     $stateProvider
       .state('menu', {
         url: '/',
         abstract: true,
         templateUrl: 'static/partials/menu.html'
       })
+
+      .state('menu.register', {
+        url: '/register',
+        templateUrl: 'static/partials/register.html',
+        controller: 'RegisterController'
+      })
       
-      .state('menu.secret_invite', {
-        url: '/secretinvite',
+      .state('menu.login', {
+        url: '/login',
+        templateUrl: 'static/partials/login.html',
+        controller: 'LoginController'
+      })
+      
+      .state('menu.invite', {
+        url: '/invite',
         templateUrl: 'static/partials/invite.html',
         controller: 'InviteController'
       })
@@ -30,10 +48,10 @@ var youDownApp = angular.module('YouDown', ['ui.router', 'restangular', 'ui.boot
         controller: 'EventDetailController'
       })
 
-      .state('event-confirmation', {
+      .state('event-confirm', {
         url: '/confirm/:eventId?userId',
-        templateUrl: '/static/partials/event-confirmation.html',
-        controller: 'EventConfirmationController'
+        templateUrl: '/static/partials/event-confirm.html',
+        controller: 'EventConfirmController'
       })
 
       .state('menu.users', {
@@ -57,6 +75,7 @@ var youDownApp = angular.module('YouDown', ['ui.router', 'restangular', 'ui.boot
     // if none of the above states are matched, use this as the fallback
     $urlRouterProvider.otherwise('/');
     //$locationProvider.html5Mode(true);
+    $httpProvider.interceptors.push('authInterceptor');
 
     RestangularProvider.setBaseUrl('/api'); 
     RestangularProvider.setResponseExtractor(function(response, operation) { 
@@ -74,9 +93,9 @@ var youDownApp = angular.module('YouDown', ['ui.router', 'restangular', 'ui.boot
       } 
       return newResponse;
     }); 
-  }])
+}])
 
-  .run(['$state', function ($state) {
-    //go here initially
-    $state.transitionTo('menu.events'); 
-  }]);
+.run(['$state', function ($state) {
+  //go here initially
+  $state.transitionTo('menu.events'); 
+}]);

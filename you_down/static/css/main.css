@@ -9,9 +9,6 @@
 	margin-bottom: 8px;
 	background-color: transparent;;
 }
-#invite-list {
-	
-}
 
 #send-invite-button {
 	height: 60px;
@@ -20,4 +17,8 @@
 
 #invite-friend-button {
 	margin-top: 0px;
+}
+
+#register-button, #login-button {
+	width: 100%;
 }
