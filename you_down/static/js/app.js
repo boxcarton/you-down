@@ -5,26 +5,26 @@
 var authtime = Date.now();
 
 var youDownApp = angular.module('YouDown', 
-  ['ui.router', 'restangular', 'ui.bootstrap','Authentication'])
+  ['ui.router', 'restangular', 'ui.bootstrap','TokenAuth'])
   
 .config(['$stateProvider', '$urlRouterProvider', '$httpProvider',
-                   '$locationProvider', 'RestangularProvider',
+         '$locationProvider', 'RestangularProvider', 
   function($stateProvider, $urlRouterProvider, $httpProvider,
            $locationProvider, RestangularProvider) {
     $stateProvider
       .state('menu', {
-        url: '/',
+        url: '',
         abstract: true,
         templateUrl: 'static/partials/menu.html'
       })
 
-      .state('menu.register', {
+      .state('register', {
         url: '/register',
         templateUrl: 'static/partials/register.html',
         controller: 'RegisterController'
       })
       
-      .state('menu.login', {
+      .state('login', {
         url: '/login',
         templateUrl: 'static/partials/login.html',
         controller: 'LoginController'
@@ -73,7 +73,8 @@ var youDownApp = angular.module('YouDown',
       })
 
     // if none of the above states are matched, use this as the fallback
-    $urlRouterProvider.otherwise('/');
+    $urlRouterProvider.otherwise('/invite');
+    $urlRouterProvider.when('/logout', 'login');
     //$locationProvider.html5Mode(true);
     $httpProvider.interceptors.push('authInterceptor');
 
@@ -97,5 +98,5 @@ var youDownApp = angular.module('YouDown',
 
 .run(['$state', function ($state) {
   //go here initially
-  $state.transitionTo('menu.events'); 
+  $state.transitionTo('menu.invite'); 
 }]);

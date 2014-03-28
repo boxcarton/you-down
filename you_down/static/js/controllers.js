@@ -1,5 +1,21 @@
 'use strict';
 
+function MenuController($scope, $localStorage, Auth, $state) {  
+  $scope.token = '';
+  $scope.username = '';
+  if ('token' in $localStorage) {
+    $scope.token = $localStorage.token;
+    var tokenPayload = angular.fromJson(Base64.decode($scope.token.split('.')[1]));
+    $scope.username = tokenPayload.u;
+  }
+    // register a globally-accessible logout function in the root scope.
+  $scope.do_logout = function() {
+    Auth.destroyToken();
+    $state.go('login');
+    justLoggedOut = true;
+  }
+}
+
 function RegisterController($scope, Restangular) {
   var register = Restangular.all('register_user')
   $scope.register = function() {
@@ -13,13 +29,30 @@ function RegisterController($scope, Restangular) {
   };
 }
 
-function LoginController($scope, Restangular) {
-  var register = Restangular.all('login')
+function LoginController(Auth, $scope, $rootScope, $location, $timeout, $localStorage, $state) {  
+  $scope.user = {username: '', password: ''};
+  $scope.login_state = '';
+  if (Auth.justLoggedOutQ()) $scope.login_state = 'logout';
+  
   $scope.login = function() {
-    if ($scope.loginForm.$valid) {
-      console.log($scope.user)
-    }
-  };
+    $scope.login_state = '';
+    Auth.destroyToken();
+    Auth.getToken($scope.user.username, $scope.user.password).then(
+      function(){
+        $scope.login_state = 'success';
+        $scope.user.password = '';
+        console.log($localStorage.token)
+        $timeout(function() {
+          $state.go('menu.invite')
+        }, 200);
+        
+      },
+      function(){
+        $scope.login_state = 'failure';
+        $scope.user.password = '';
+        $('input.password').focus();
+      });
+  }
 }
 
 function InviteController($scope, Restangular) {

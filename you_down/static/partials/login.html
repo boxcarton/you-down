@@ -1,27 +1,54 @@
-<div class="col-xs-12 col-sm-12 col-md-6">
-  <h2> Log in to YouDown</h2>
-  <hr>
-  <form name="loginForm" ng-submit="login()" novalidate>          
-    <div class="form-group">
-        <label>Username</label>
-        <input type="text" 
-               name="username" 
-               class="form-control" 
-               ng-model="user.username">
+<div class="navbar navbar-default" role="navigation">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <div class="navbar-brand">You Down</div>
     </div>
-        
-    <div class="form-group">
-        <label>Password</label>
-        <input type="password" 
-               name="password"
-               class="form-control" 
-               ng-model="user.password">
+  </div><!--/.container-fluid -->
+</div>
+
+<div class="container">
+  <div class="col-xs-12 col-sm-12 col-md-6">
+    <h2> Log in to YouDown</h2>
+    <hr>
+    <div ng-if="login_state == 'success'" class="alert alert-success alert-dismissable">
+    <button type="button" class="close" data-dismiss="alert" 
+            aria-hidden="true">&times;</button>
+      Login successful.<br>
+      You will be redirected momentarily.
     </div>
-    <button id="login-button"
-            type="submit" 
-            class="btn btn-primary btn-lg" 
-            ui-sref="menu.invite">
-      Log In
-    </button> 
-  </form> 
+    <div ng-if="login_state == 'logout'" class="alert alert-info alert-dismissable">
+      <button type="button" class="close" data-dismiss="alert" 
+              aria-hidden="true">&times;</button>
+      You have been successfully logged out.
+    </div>
+    <div ng-if="login_state == 'failure'" class="alert alert-danger alert-dismissable">
+      <button type="button" class="close" data-dismiss="alert" 
+              aria-hidden="true">&times;</button>
+      Username / Password not accepted.<br>
+      Please try again.
+    </div>
+
+    <form name="loginForm" ng-submit="login()" novalidate>          
+      <div class="form-group">
+          <label>Username</label>
+          <input type="text" 
+                 name="username" 
+                 class="form-control" 
+                 ng-model="user.username">
+      </div>
+          
+      <div class="form-group">
+          <label>Password</label>
+          <input type="password" 
+                 name="password"
+                 class="form-control" 
+                 ng-model="user.password">
+      </div>
+      <button id="login-button"
+              type="submit" 
+              class="btn btn-primary btn-lg">
+        Log In
+      </button> 
+    </form> 
+  </div>
 </div>

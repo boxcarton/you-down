@@ -60,7 +60,7 @@ class Users(db.Model):
 
   def generate_auth_token(self, expiration=600):
     s = Serializer(app.config['SECRET_KEY'], expires_in=expiration)
-    return s.dumps({'id': self.id})
+    return s.dumps({'id': self.id, 'u': self.username})
 
   @staticmethod
   def verify_auth_token(token):
@@ -76,7 +76,3 @@ class Users(db.Model):
 
 # models for which we want to create API endpoints
 app.config['API_MODELS'] = { 'events': Events, 'users': Users }
-
-# models for which we want to create CRUD-style URL endpoints,
-# and pass the routing onto our AngularJS application
-app.config['CRUD_URL_MODELS'] = { 'events': Events, 'users': Users }
