@@ -37,4 +37,3 @@ nosetests.xml
 .DS_Store
 .env
 seeds.json
-you_down/settings.py
