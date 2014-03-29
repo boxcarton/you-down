@@ -1,13 +1,14 @@
 <div class="navbar navbar-default" role="navigation">
   <div class="container-fluid">
     <div class="navbar-header">
-      <button id="menu-button" type="button" class="navbar-toggle pull-left" data-toggle="collapse" data-target=".navbar-collapse">
+      <button id="menu-button" type="button" class="navbar-toggle pull-left" 
+              data-toggle="collapse" data-target=".navbar-collapse">
         <span class="sr-only">Toggle navigation</span>
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <!--
+
       <button style="" id="add-invite-button" 
               class="btn btn-default btn-lg pull-right"
               ui-sref="menu.invite"> 
@@ -33,21 +34,29 @@
   <h2> {{event.info}} </h2>
   <h3> Created by: Josh </h3>
   <hr>
-  <div class="row" style="margin-top:7%">
+  <div class="row" style="margin-top:4%">
     <div class="col-md-6 col-xs-6">
       <h4> Who is invited: </h4>
-      <h5 ng-repeat="attendee in event.attendees">{{attendee.name}}</h5>
-      <h5 ng-repeat="not_attendee in event.not_attendees">{{not_attendee.name}}</h5>
+      <h5 ng-repeat="attendee in event.attendees">
+        {{attendee.name}}
+      </h5>
+      <h5 ng-repeat="not_attendee in event.not_attendees">
+        {{not_attendee.name}}
+      </h5>
     </div>
   </div>
+  <h3> You are now: 
+    <span style="color:red">
+      {{attendStatus|uppercase|replaceUnderscore}}
+    </span>
+  </h3>
   <hr>
-  <h3> You are now: <span>{{attendStatus}}</span></h3>
   <div style="width: 100%" class="btn-group" ng-show="isInvited">
     <button style="width: 50%" type="button" class="btn btn-primary btn-lg" 
-            ng-model="attendStatus"
-            btn-radio="'attending'" ng-click="updateStatus()">Attending</button>
+            ng-model="attendStatus" btn-radio="'attending'" 
+            ng-click="updateStatus()">Attending</button>
     <button style="width: 50%" type="button" class="btn btn-primary btn-lg" 
-            ng-model="attendStatus"
-            btn-radio="'not_attending'" ng-click="updateStatus()">Not Attending</button>
+            ng-model="attendStatus" btn-radio="'not_attending'" 
+            ng-click="updateStatus()">Not Attending</button>
   </div>
 </div>

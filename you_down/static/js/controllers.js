@@ -7,6 +7,8 @@ function MenuController($scope, $localStorage, Auth, $state) {
     $scope.token = $localStorage.token;
     var tokenPayload = angular.fromJson(Base64.decode($scope.token.split('.')[1]));
     $scope.username = tokenPayload.u;
+  } else {
+    $state.go('login');
   }
     // register a globally-accessible logout function in the root scope.
   $scope.do_logout = function() {
@@ -29,7 +31,8 @@ function RegisterController($scope, Restangular) {
   };
 }
 
-function LoginController(Auth, $scope, $rootScope, $location, $timeout, $localStorage, $state) {  
+function LoginController(Auth, $scope, $rootScope, $location, 
+                         $timeout, $localStorage, $state) {  
   $scope.user = {username: '', password: ''};
   $scope.login_state = '';
   if (Auth.justLoggedOutQ()) $scope.login_state = 'logout';
@@ -41,7 +44,6 @@ function LoginController(Auth, $scope, $rootScope, $location, $timeout, $localSt
       function(){
         $scope.login_state = 'success';
         $scope.user.password = '';
-        console.log($localStorage.token)
         $timeout(function() {
           $state.go('menu.invite')
         }, 200);
@@ -150,19 +152,37 @@ function EventConfirmController($scope, $stateParams, Restangular) {
       $scope.event = event;
       
       //make arrays of just Ids for easier operation
-      var attendingIds = _.map($scope.event.attendees, function(l){return l.id});
-      var notAttendingIds = _.map($scope.event.not_attendees, function(l){return l.id});
+      var attendingIds = _.map($scope.event.attendees, 
+                               function(l){
+                                  return l.id
+                               });
+      var notAttendingIds = _.map($scope.event.not_attendees, 
+                                  function(l){
+                                    return l.id
+                                  });
 
       if (_.contains(attendingIds, userId)) {
         $scope.isInvited = true;
         $scope.attendStatus = "attending";
-        $scope.user = _.filter($scope.event.attendees, function(a) {return a.id === userId})[0]
-        $scope.event.attendees = _.reject($scope.event.attendees, function(a) {return a.id === userId})
+        $scope.user = _.filter($scope.event.attendees, 
+                               function(a){
+                                 return a.id === userId
+                               })[0];
+        $scope.event.attendees = _.reject($scope.event.attendees, 
+                                          function(a){
+                                            return a.id === userId
+                                          });
       }  else if(_.contains(notAttendingIds, userId)) {
         $scope.isInvited = true;
         $scope.attendStatus = "not_attending";
-        $scope.user = _.filter($scope.event.not_attendees,function(a) {return a.id === userId})[0]
-        $scope.event.not_attendees = _.reject($scope.event.not_attendees, function(a) {return a.id === userId})  
+        $scope.user = _.filter($scope.event.not_attendees,
+                               function(a){
+                                 return a.id === userId
+                               })[0];
+        $scope.event.not_attendees = _.reject($scope.event.not_attendees, 
+                                              function(a){
+                                                return a.id === userId
+                                              });
       } else {
         $scope.isInvited = false;
         $scope.attendStatus = "not_attending";
@@ -173,17 +193,11 @@ function EventConfirmController($scope, $stateParams, Restangular) {
   $scope.updateStatus = function() {
     //get the most updated state from database to avoid state tracking in code
     getAttendance();
-    console.log($scope.attendStatus);
     if($scope.attendStatus === "attending") {
-
-      
       $scope.event.attendees.push($scope.user)
     } else {
       $scope.event.not_attendees.push($scope.user)
-      
     }
-    console.log($scope.event.attendees);
-    console.log($scope.event.not_attendees);
     $scope.event.put()
   }
 }

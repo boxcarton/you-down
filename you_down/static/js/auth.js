@@ -55,14 +55,16 @@ angular.module('TokenAuth', ['ui.router', 'ngStorage'])
          function($rootScope, $q, $localStorage, $location, $injector) {
   return {
     request: function (config) {
+
       // only insert auth token for relative URLs
       // see: http://stackoverflow.com/a/19709846
       var r = new RegExp('^(?:[a-z]+:)?//', 'i');
+
       if (r.test(config.url)) {
         // absolue URL; do nothing.
         return config;
       }
-      
+        
       if (config.url.indexOf('?') != -1) {
         config.url = config.url + "&_=" + authtime;
       }else{
@@ -82,7 +84,6 @@ angular.module('TokenAuth', ['ui.router', 'ngStorage'])
       var $state = $injector.get('$state');
       if (rejection.status === 401) {
           $state.transitionTo('login');
-        }
       }
       return $q.reject(rejection);
     }
