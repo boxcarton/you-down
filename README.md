@@ -1,11 +1,10 @@
 you-down
 ========
 
-Working app at youdown.herokuapp.com (may take some time to boot up since running off of one dyno)
+Working app at 
 
-The seed app for this app is from:
-https://github.com/rxl/angular-flask
-
+http://youdown.herokuapp.com 
+(may take some time to boot up since running off of one dyno)
 
 1. I highly recommend getting virtualenv and virtualenvwrapper installed
 2. pip install all the necessary libraries: Flask, flask-restless, flask-sqlalchemy, requests
