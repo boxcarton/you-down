@@ -61,11 +61,13 @@ function InviteController($scope, $localStorage, Restangular) {
   var usersPromise = Restangular.all('users')
   var eventsPromise = Restangular.all('events')
   var invite = Restangular.all('invite')
-  $scope.token = $localStorage.token;
-  var tokenPayload = angular.fromJson(
-                      Base64.decode(
-                        $scope.token.split('.')[1]
-                     ));
+  if ('token' in $localStorage) {
+    $scope.token = $localStorage.token;
+    var tokenPayload = angular.fromJson(Base64.decode($scope.token.split('.')[1]));
+    $scope.username = tokenPayload.username;
+  } else {
+    $state.go('login');
+  }
 
   usersPromise.getList({'results_per_page': 40}).then(function(users) {
     $scope.users = _.reject(users, 
