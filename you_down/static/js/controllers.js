@@ -57,7 +57,7 @@ function LoginController(Auth, $scope, $rootScope, $location,
   }
 }
 
-function InviteController($scope, $localStorage, Restangular) {
+function InviteController($scope, $localStorage, $state, Restangular) {
   var usersPromise = Restangular.all('users')
   var eventsPromise = Restangular.all('events')
   var invite = Restangular.all('invite')
@@ -103,16 +103,7 @@ function InviteController($scope, $localStorage, Restangular) {
     var selected = getSelectedUsers()
     $scope.event.not_attendees = formatSelectedUsers(selected);
     $scope.event.creator_id = tokenPayload.id;
-
-    /*remove the creator from not attending to attending list
-    var currentUser = _.filter($scope.event.not_attendees, 
-                           function(a){
-                             return a.id === tokenPayload.id
-                           })[0];
-
-    $scope.event.attendees.push(currentUser)*/
     eventsPromise.post($scope.event).then(function(newEvent){
-
       invite.post(newEvent);
     });
   }
