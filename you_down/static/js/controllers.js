@@ -6,7 +6,7 @@ function MenuController($scope, $localStorage, Auth, $state) {
   if ('token' in $localStorage) {
     $scope.token = $localStorage.token;
     var tokenPayload = angular.fromJson(Base64.decode($scope.token.split('.')[1]));
-    $scope.username = tokenPayload.u;
+    $scope.username = tokenPayload.username;
   } else {
     $state.go('login');
   }
@@ -57,14 +57,22 @@ function LoginController(Auth, $scope, $rootScope, $location,
   }
 }
 
-function InviteController($scope, Restangular) {
-  var users = Restangular.all('users')
-  var events = Restangular.all('events')
+function InviteController($scope, $localStorage, Restangular) {
+  var usersPromise = Restangular.all('users')
+  var eventsPromise = Restangular.all('events')
   var invite = Restangular.all('invite')
+  $scope.token = $localStorage.token;
+  var tokenPayload = angular.fromJson(
+                      Base64.decode(
+                        $scope.token.split('.')[1]
+                     ));
 
-  users.getList({'results_per_page': 100}).then(function(users) {
-    $scope.users = _.each(users, function(f){f.selected = false});
-
+  usersPromise.getList({'results_per_page': 40}).then(function(users) {
+    $scope.users = _.reject(users, 
+                            function(a){
+                              return a.id === tokenPayload.id;
+                            });
+    $scope.users = _.each($scope.users, function(f){f.selected = false});
     //hack to split users into two columns
     var half_length = Math.ceil($scope.users.length / 2);  
     $scope.users_1 = $scope.users.slice(0, half_length);
@@ -92,7 +100,17 @@ function InviteController($scope, Restangular) {
   $scope.invite = function() {
     var selected = getSelectedUsers()
     $scope.event.not_attendees = formatSelectedUsers(selected);
-    events.post($scope.event).then(function(newEvent){
+    $scope.event.creator_id = tokenPayload.id;
+
+    /*remove the creator from not attending to attending list
+    var currentUser = _.filter($scope.event.not_attendees, 
+                           function(a){
+                             return a.id === tokenPayload.id
+                           })[0];
+
+    $scope.event.attendees.push(currentUser)*/
+    eventsPromise.post($scope.event).then(function(newEvent){
+
       invite.post(newEvent);
     });
   }
@@ -105,14 +123,22 @@ function EventListController($scope, Restangular) {
   });
 }
 
-function EventDetailController($scope, $stateParams, Restangular) {
-  var eventPromise = Restangular.one('events', $stateParams.eventId)
+function EventDetailController($scope, $stateParams, $localStorage, Restangular) {
+  var eventPromise = Restangular.one('events', $stateParams.eventId);
+  var tokenPayload = angular.fromJson(Base64.decode($localStorage.token.split('.')[1]));
+
   eventPromise.get().then(function(event){
     $scope.event = event;
   })
 
-  $scope.deleteEvent = function(){
-    $scope.event.remove();
+  $scope.addMeToEvent = function() {
+    
+    Restangular.one('users', tokenPayload.id).get().then(function(user){
+      var currentUser = _.pick(user, 'id', 'email', 'name', 
+                              'password_hash','phone','username');
+      $scope.event.attendees.push(currentUser);
+      $scope.event.put();
+    });
   }
 }
 
@@ -134,13 +160,6 @@ function UserDetailController($scope, $stateParams, Restangular) {
   }
 }
 
-function AddUserController($scope, Restangular) {
-  var usersPromise = Restangular.all('users');
-  $scope.addUser = function() {
-    usersPromise.post($scope.newUser);
-  }
-}
-
 function EventConfirmController($scope, $stateParams, Restangular) {
   var eventPromise = Restangular.one('events', $stateParams.eventId).get();
   var userId = parseInt($stateParams.userId);
@@ -150,7 +169,6 @@ function EventConfirmController($scope, $stateParams, Restangular) {
     //make both the attending and not attending lists with current user removed
     eventPromise.then(function(event){
       $scope.event = event;
-      
       //make arrays of just Ids for easier operation
       var attendingIds = _.map($scope.event.attendees, 
                                function(l){
@@ -172,7 +190,7 @@ function EventConfirmController($scope, $stateParams, Restangular) {
                                           function(a){
                                             return a.id === userId
                                           });
-      }  else if(_.contains(notAttendingIds, userId)) {
+      } else if (_.contains(notAttendingIds, userId)) {
         $scope.isInvited = true;
         $scope.attendStatus = "not_attending";
         $scope.user = _.filter($scope.event.not_attendees,
@@ -198,6 +216,6 @@ function EventConfirmController($scope, $stateParams, Restangular) {
     } else {
       $scope.event.not_attendees.push($scope.user)
     }
-    $scope.event.put()
+    $scope.event.put();
   }
 }

@@ -14,7 +14,7 @@
               ui-sref="menu.invite"> 
           <span class="glyphicon glyphicon-plus" 
                 style="vertical-align:middle"></span>
-      </button> -->
+      </button>
       <a id="logo" class="navbar-brand" ui-sref="menu.events">You Down</a>
     </div>
     <div class="navbar-collapse collapse">
@@ -28,13 +28,10 @@
 </div>
 
 <div class="container">
-  <h4> Hey {{user.name}}, are you down for... </h4>
-  <br>
+  <h4> Hey {{user.name|first_name}}, {{event.creator.name}} wants to ... </h4>
 
   <h2> {{event.info}} </h2>
-  <h3> Created by: Josh </h3>
-  <hr>
-  <div class="row" style="margin-top:4%">
+  <div class="row" style="margin-top:3%">
     <div class="col-md-6 col-xs-6">
       <h4> Who is invited: </h4>
       <h5 ng-repeat="attendee in event.attendees">
@@ -45,19 +42,20 @@
       </h5>
     </div>
   </div>
-  <h3> You are now: 
+  <h4>Are you down?</h4>
+  <h3> You are: 
     <span style="color:red">
-      {{attendStatus|uppercase|replaceUnderscore}}
+      {{attendStatus|replace_attend|uppercase}}
     </span>
   </h3>
   <hr>
   <div style="width: 100%" class="btn-group" ng-show="isInvited">
     <button style="width: 50%" type="button" class="btn btn-primary btn-lg" 
             ng-model="attendStatus" btn-radio="'attending'" 
-            ng-click="updateStatus()">Attending</button>
+            ng-click="updateStatus()">I'm down</button>
     <button style="width: 50%" type="button" class="btn btn-primary btn-lg" 
             ng-model="attendStatus" btn-radio="'not_attending'" 
-            ng-click="updateStatus()">Not Attending</button>
+            ng-click="updateStatus()">Sorry I'm not down</button>
   </div>
   <hr>
 </div>

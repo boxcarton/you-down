@@ -22,3 +22,7 @@
 #register-button, #login-button {
 	width: 100%;
 }
+
+.container {
+	margin-bottom: 4%;
+}

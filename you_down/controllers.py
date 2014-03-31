@@ -31,13 +31,15 @@ def index(**kwargs):
 @app.route('/api/invite', methods=['POST'])
 def invite():
   event_id = request.json['id']
+  creator_name = request.json['creator']['name'].split(' ')[0]
 
   for user in request.json['not_attendees']:
     link = "http://" + app.config['HOST_DOMAIN'] + "/#/confirm/" + \
       str(event_id) + "?userId=" + str(user['id'])
-    message = "Hey %s, This is Josh.  " \
+    message = "Hey %s, This is %s.  " \
         "I'm thinking about %s.  " \
-        "Are you down? Reply at %s." % (user['name'],
+        "Are you down? Reply at %s." % (user['name'].split()[0],
+                                        creator_name,
                                         request.json['info'],
                                         link)
     client.messages.create( 

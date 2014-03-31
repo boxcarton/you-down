@@ -1,6 +1,8 @@
 you-down
 ========
 
+Working app at youdown.herokuapp.com (may take some time to boot up since running off of one dyno)
+
 The seed app for this app is from:
 https://github.com/rxl/angular-flask
 

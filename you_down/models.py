@@ -19,16 +19,21 @@ not_attended_events_users = db.Table('not_attended_events_users',
 
 class Events(db.Model):
   id = db.Column(db.Integer, primary_key=True)
+  creator_id = db.Column(db.Integer, db.ForeignKey('users.id'))
+  created_time = db.Column(db.DateTime(timezone=False))
   info = db.Column(db.Text)
 
   attendees = db.relationship('Users', 
                 secondary=attended_events_users,
                 backref=db.backref('attended', lazy='dynamic'))
+
   not_attendees = db.relationship('Users', 
                 secondary=not_attended_events_users,
                 backref=db.backref('not_attended', lazy='dynamic'))
 
-  def __init__(self, info):
+  def __init__(self, creator_id, info):
+    self.creator_id = creator_id
+    self.created_time = datetime.utcnow()
     self.info = info
 
   def __repr__(self):
@@ -41,6 +46,8 @@ class Users(db.Model):
   password_hash = db.Column(db.String(128))
   email = db.Column(db.Text)
   phone = db.Column(db.Text)
+
+  created_events = db.relationship("Events", backref="creator")
 
   def __init__(self, name, username, email, phone):
     self.name = name
@@ -60,7 +67,9 @@ class Users(db.Model):
 
   def generate_auth_token(self, expiration=600):
     s = Serializer(app.config['SECRET_KEY'], expires_in=expiration)
-    return s.dumps({'id': self.id, 'u': self.username})
+    return s.dumps({'id': self.id, 
+                    'username': self.username,
+                    'name': self.name})
 
   @staticmethod
   def verify_auth_token(token):

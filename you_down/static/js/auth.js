@@ -67,7 +67,7 @@ angular.module('TokenAuth', ['ui.router', 'ngStorage'])
         
       if (config.url.indexOf('?') != -1) {
         config.url = config.url + "&_=" + authtime;
-      }else{
+      } else {
         config.url = config.url + "?_=" + authtime;
       }
       config.headers = config.headers || {};
