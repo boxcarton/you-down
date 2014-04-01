@@ -4,7 +4,7 @@
     <input type="text" 
            class="form-control input-lg" 
            ng-model="event.info"
-           placeholder="e.g. Bonchon tomorrow night around 6:30pm">
+           placeholder="e.g. Bonchon tomorrow at 6pm">
     <br>
   </div>
 </form>
@@ -18,7 +18,7 @@
         ng-repeat="user in users_1"
         type="button"
         class="btn btn-default"
-        ng-model="user.selected" btn-checkbox> {{user.name}} </button>
+        ng-model="user.selected" btn-checkbox> {{user.name|first_name}} </button>
     </div>
   </div>
   <div class="col-xs-6 col-sm-6 col-md-6">
@@ -27,7 +27,7 @@
         ng-repeat="user in users_2"
         type="button"
         class="btn btn-default"
-        ng-model="user.selected" btn-checkbox> {{user.name}} </button>
+        ng-model="user.selected" btn-checkbox> {{user.name|first_name}} </button>
     </div>
   </div>
 </div>

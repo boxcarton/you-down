@@ -24,13 +24,6 @@ youDownApp
   }
 })
 
-.filter('local_time', function() {
-  return function(input) {
-    if (input) {
-      return input.split(' ')[0];
-    }
-  }
-})
 
 .filter('capitalize_name', function() {
   return function(input, scope) {
