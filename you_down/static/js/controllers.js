@@ -5,7 +5,10 @@ function MenuController($scope, $localStorage, Auth, $state) {
   $scope.username = '';
   if ('token' in $localStorage) {
     $scope.token = $localStorage.token;
-    var tokenPayload = angular.fromJson(Base64.decode($scope.token.split('.')[1]));
+    var tokenPayload = angular.fromJson(
+                         Base64.decode(
+                          $scope.token.split('.')[1]
+                       ));
     $scope.username = tokenPayload.username;
   } else {
     $state.go('login');
@@ -63,7 +66,10 @@ function InviteController($scope, $localStorage, $state, Restangular) {
   var invite = Restangular.all('invite')
   if ('token' in $localStorage) {
     $scope.token = $localStorage.token;
-    var tokenPayload = angular.fromJson(Base64.decode($scope.token.split('.')[1]));
+    var tokenPayload = angular.fromJson(
+                         Base64.decode(
+                           $scope.token.split('.')[1]
+                       ));
     $scope.username = tokenPayload.username;
   } else {
     $state.go('login');
@@ -103,6 +109,7 @@ function InviteController($scope, $localStorage, $state, Restangular) {
     var selected = getSelectedUsers()
     $scope.event.not_attendees = formatSelectedUsers(selected);
     $scope.event.creator_id = tokenPayload.id;
+    $scope.event.status = "pending";
     eventsPromise.post($scope.event).then(function(newEvent){
       invite.post(newEvent);
     });
@@ -118,14 +125,29 @@ function EventListController($scope, Restangular) {
 
 function EventDetailController($scope, $stateParams, $localStorage, Restangular) {
   var eventPromise = Restangular.one('events', $stateParams.eventId);
-  var tokenPayload = angular.fromJson(Base64.decode($localStorage.token.split('.')[1]));
-
+  var tokenPayload = angular.fromJson(
+                       Base64.decode(
+                         $localStorage.token.split('.')[1]
+                     ));
+  
   eventPromise.get().then(function(event){
     $scope.event = event;
+    if(event.creator.username === tokenPayload.username) {
+      $scope.isCreator = true;
+    }
   })
+  
+  $scope.cancelEvent = function(){
+    $scope.event.status = "canceled";
+    $scope.event.put();
+  }
+
+  $scope.confirmEvent = function(){
+    $scope.event.status = "confirmed";
+    $scope.event.put();
+  }
 
   $scope.addMeToEvent = function() {
-    
     Restangular.one('users', tokenPayload.id).get().then(function(user){
       var currentUser = _.pick(user, 'id', 'email', 'name', 
                               'password_hash','phone','username');

@@ -22,6 +22,7 @@ class Events(db.Model):
   creator_id = db.Column(db.Integer, db.ForeignKey('users.id'))
   created_time = db.Column(db.DateTime(timezone=False))
   info = db.Column(db.Text)
+  status = db.Column(db.Text)
 
   attendees = db.relationship('Users', 
                 secondary=attended_events_users,
@@ -31,10 +32,11 @@ class Events(db.Model):
                 secondary=not_attended_events_users,
                 backref=db.backref('not_attended', lazy='dynamic'))
 
-  def __init__(self, creator_id, info):
+  def __init__(self, creator_id, info, status):
     self.creator_id = creator_id
     self.created_time = datetime.utcnow()
     self.info = info
+    self.status = status
 
   def __repr__(self):
     return '<Event %r>' % self.info
