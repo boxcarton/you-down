@@ -119,6 +119,11 @@ function InviteController($scope, $localStorage, $state, Restangular) {
 function EventListController($scope, Restangular) {
   var eventsPromise = Restangular.all('events')
   eventsPromise.getList({'results_per_page': 100}).then(function(events) {
+    $scope.events = events;
+    $scope.events = _.map($scope.events, function(event){
+                        var time = event.created_time.toString();
+                        return event.created_time = new Date(time);  
+                      })
     $scope.events = events.reverse();
   });
 }
@@ -135,6 +140,9 @@ function EventDetailController($scope, $stateParams, $localStorage, Restangular)
     if(event.creator.username === tokenPayload.username) {
       $scope.isCreator = true;
     }
+
+    var time = event.created_time.toString();
+    $scope.event.created_time = new Date(time);
   })
   
   $scope.cancelEvent = function(){
