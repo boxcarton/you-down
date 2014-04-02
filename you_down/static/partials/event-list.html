@@ -11,7 +11,9 @@
       <td>{{event.info}}</td>
       <td>{{event.creator.name}}</td>
       <td>{{event.local_created_time|date: 'short'}}</td>
-      <td class="{{event.status}}">{{event.status|uppercase}}</td>
+      <td ng-class="{confirmed:'go', canceled:'stop'}[event.status]">
+      	{{event.status|uppercase}}
+      </td>
     </tr>
   </tbody>
 </table>

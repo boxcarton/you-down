@@ -128,7 +128,8 @@ function EventListController($scope, Restangular) {
   });
 }
 
-function EventDetailController($scope, $stateParams, $localStorage, Restangular) {
+function EventDetailController($scope, $stateParams, 
+                               $localStorage, Restangular) {
   var eventPromise = Restangular.one('events', $stateParams.eventId);
   var tokenPayload = angular.fromJson(
                        Base64.decode(
@@ -137,10 +138,29 @@ function EventDetailController($scope, $stateParams, $localStorage, Restangular)
   
   eventPromise.get().then(function(event){
     $scope.event = event;
+    $scope.isRando = true;
     if(event.creator.username === tokenPayload.username) {
       $scope.isCreator = true;
+      $scope.isInvited = false;
+      $scope.isRando = false;
     }
+    $scope.userId = tokenPayload.id;
+    var attendingIds = _.map($scope.event.attendees, 
+                             function(l){
+                                return l.id
+                             });
+    var notAttendingIds = _.map($scope.event.not_attendees, 
+                                function(l){
+                                  return l.id
+                                });
 
+    if (_.contains(attendingIds, $scope.userId) ||
+        _.contains(notAttendingIds, $scope.userId)) {
+      $scope.isCreator = false;
+      $scope.isInvited = true;
+      $scope.isRando = false;
+    }
+    //display local time instead of UTC
     var time = event.created_time.toString();
     $scope.local_created_time = new Date(time);
   })
@@ -186,59 +206,67 @@ function UserDetailController($scope, $stateParams, Restangular) {
 function EventConfirmController($scope, $stateParams, Restangular) {
   var eventPromise = Restangular.one('events', $stateParams.eventId).get();
   var userId = parseInt($stateParams.userId);
-  getAttendance();
 
-  function getAttendance() {
-    //make both the attending and not attending lists with current user removed
-    eventPromise.then(function(event){
-      $scope.event = event;
-      //make arrays of just Ids for easier operation
-      var attendingIds = _.map($scope.event.attendees, 
-                               function(l){
+  eventPromise.then(function(event){
+    $scope.event = event;
+    $scope.inviteList = event.attendees.concat(event.not_attendees);
+    getStatus();
+  });
+
+  function getStatus () {
+    //firstmake arrays of just Ids for easier operation
+    var attendingIds = _.map($scope.event.attendees, 
+                             function(l){
+                                return l.id
+                             });
+    var notAttendingIds = _.map($scope.event.not_attendees, 
+                                function(l){
                                   return l.id
-                               });
-      var notAttendingIds = _.map($scope.event.not_attendees, 
-                                  function(l){
-                                    return l.id
-                                  });
+                                });  
+    if (_.contains(attendingIds, userId)) {
+      $scope.isInvited = true;
+      $scope.attendStatus = "attending";
+    } else if (_.contains(notAttendingIds, userId)) {
+      $scope.isInvited = true;
+      $scope.attendStatus = "not_attending";
+    } else {
+      $scope.isInvited = false;
+      $scope.attendStatus = "not_attending";
+    }
+  }
 
-      if (_.contains(attendingIds, userId)) {
-        $scope.isInvited = true;
-        $scope.attendStatus = "attending";
-        $scope.user = _.filter($scope.event.attendees, 
-                               function(a){
-                                 return a.id === userId
-                               })[0];
-        $scope.event.attendees = _.reject($scope.event.attendees, 
+  $scope.notDown = function() {
+    var user = _.filter($scope.event.attendees, 
+                           function(a){
+                             return a.id === userId
+                           })[0];
+    $scope.event.attendees = _.reject($scope.event.attendees, 
+                                      function(a){
+                                        return a.id === userId
+                                      });
+    if (user) {
+      $scope.event.not_attendees.push(user);
+      $scope.event.put().then(function(event){
+        $scope.attendStatus === "not_attending";
+      });
+    }
+  }
+
+  $scope.isDown = function() {
+    var user = _.filter($scope.event.not_attendees,
+                           function(a){
+                             return a.id === userId
+                           })[0];
+
+    $scope.event.not_attendees = _.reject($scope.event.not_attendees, 
                                           function(a){
                                             return a.id === userId
                                           });
-      } else if (_.contains(notAttendingIds, userId)) {
-        $scope.isInvited = true;
-        $scope.attendStatus = "not_attending";
-        $scope.user = _.filter($scope.event.not_attendees,
-                               function(a){
-                                 return a.id === userId
-                               })[0];
-        $scope.event.not_attendees = _.reject($scope.event.not_attendees, 
-                                              function(a){
-                                                return a.id === userId
-                                              });
-      } else {
-        $scope.isInvited = false;
-        $scope.attendStatus = "not_attending";
-      }
-    });
-  }
-
-  $scope.updateStatus = function() {
-    //get the most updated state from database to avoid state tracking in code
-    getAttendance();
-    if($scope.attendStatus === "attending") {
-      $scope.event.attendees.push($scope.user)
-    } else {
-      $scope.event.not_attendees.push($scope.user)
+    if (user) {
+      $scope.event.attendees.push(user);
+      $scope.event.put().then(function(event){
+        $scope.attendStatus === "not_attending";
+      });
     }
-    $scope.event.put();
   }
 }
