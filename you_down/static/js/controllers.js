@@ -122,7 +122,7 @@ function EventListController($scope, Restangular) {
     $scope.events = events;
     $scope.events = _.map($scope.events, function(event){
                         var time = event.created_time.toString();
-                        return event.created_time = new Date(time);  
+                        return event.local_created_time = new Date(time);  
                       })
     $scope.events = events.reverse();
   });
@@ -142,7 +142,7 @@ function EventDetailController($scope, $stateParams, $localStorage, Restangular)
     }
 
     var time = event.created_time.toString();
-    $scope.event.created_time = new Date(time);
+    $scope.local_created_time = new Date(time);
   })
   
   $scope.cancelEvent = function(){

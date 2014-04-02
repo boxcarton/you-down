@@ -10,7 +10,7 @@
     	ui-sref="menu.event-detail({eventId: event.id})">
       <td>{{event.info}}</td>
       <td>{{event.creator.name}}</td>
-      <td>{{event.created_time|date: 'short'}}</td>
+      <td>{{event.local_created_time|date: 'short'}}</td>
       <td class="{{event.status}}">{{event.status|uppercase}}</td>
     </tr>
   </tbody>
