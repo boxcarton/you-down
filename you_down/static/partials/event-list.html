@@ -2,6 +2,7 @@
   <thead style="font-weight:700">
     <td> event info: </td>
     <td> created by: </td>
+    <td> created time: </td>
     <td> status: </td>
   </thead>
   <tbody>
@@ -9,7 +10,8 @@
     	ui-sref="menu.event-detail({eventId: event.id})">
       <td>{{event.info}}</td>
       <td>{{event.creator.name}}</td>
-      <td>{{event.status|uppercase}}</td>
+      <td>{{event.created_time|date: 'short'}}</td>
+      <td class="{{event.status}}">{{event.status|uppercase}}</td>
     </tr>
   </tbody>
 </table>

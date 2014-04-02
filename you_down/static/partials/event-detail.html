@@ -1,6 +1,6 @@
 <h2> {{event.info}} </h2>
 <br>
-<h4> status: {{event.status|uppercase}} </h4>
+<h4> status: <span class="{{event.status}}"> {{event.status|uppercase}} </span></h4>
 <h4> created by: {{event.creator.name}} </h4>
 <h4> created time: {{event.created_time|date:'MMM d'}} 
      at {{event.created_time|date:'hh:mm a'}} </h4>

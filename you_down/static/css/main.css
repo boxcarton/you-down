@@ -26,3 +26,11 @@
 .container {
 	margin-bottom: 4%;
 }
+
+.confirmed {
+	color: #5cb85c;
+}
+
+.canceled {
+	color: #d9534f;
+}
