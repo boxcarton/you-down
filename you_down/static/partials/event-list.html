@@ -6,7 +6,7 @@
     <td> status: </td>
   </thead>
   <tbody>
-    <tr ng-repeat="event in events" 
+    <tr ng-repeat="event in events|orderBy:'created_time':'reverse'" 
     	ui-sref="menu.event-detail({eventId: event.id})">
       <td>{{event.info}}</td>
       <td>{{event.creator.name}}</td>
