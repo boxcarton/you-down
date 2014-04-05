@@ -21,12 +21,23 @@ function MenuController($scope, $localStorage, Auth, $state) {
   }
 }
 
-function RegisterController($scope, Restangular) {
+function RegisterController(Auth, $scope, $state, $timeout, Restangular) {
   var register = Restangular.all('register_user')
   $scope.register = function() {
     if ($scope.registerForm.$valid) {
       register.post($scope.newUser).then(function() {
         $scope.message = "Successfully registered";
+        Auth.getToken($scope.newUser.username, $scope.newUser.password).then(
+          function(){
+            $scope.login_state = 'success';
+            $timeout(function() {
+              $state.go('menu.invite')
+            }, 800);
+          },
+          function(){
+            $scope.login_state = 'failure';
+            $scope.message = "There was an error registering you";
+          });
       }, function() {
         $scope.message = "There was an error registering you";
       });
