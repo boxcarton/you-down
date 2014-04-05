@@ -91,7 +91,7 @@ function InviteController($scope, $localStorage, $state, Restangular) {
                             function(a){
                               return a.id === tokenPayload.id;
                             });
-    $scope.users = _.each($scope.users, function(f){f.selected = false});
+    $scope.users = _.each($scope.users, function(u){u.selected = false});
     //hack to split users into two columns
     var half_length = Math.ceil($scope.users.length / 2);  
     $scope.users_1 = $scope.users.slice(0, half_length);
@@ -100,10 +100,10 @@ function InviteController($scope, $localStorage, $state, Restangular) {
 
   var getSelectedUsers = function() {
     var s1 = _.filter($scope.users_1, 
-                       function(f){ return f.selected == true }
+                       function(u){ return u.selected == true }
                      );
     var s2 = _.filter($scope.users_2, 
-                       function(f){ return f.selected == true }
+                       function(u){ return u.selected == true }
                      );
     s1.push.apply(s1, s2);
 
@@ -112,7 +112,7 @@ function InviteController($scope, $localStorage, $state, Restangular) {
   
   var formatSelectedUsers = function(users) {
     return _.map(users, 
-             function(f) {return _.pick(f,'id')}
+             function(u) {return _.pick(u, 'id')}
            ); 
   }
 

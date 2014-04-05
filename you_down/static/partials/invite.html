@@ -15,26 +15,34 @@
   <div class="col-xs-6 col-sm-6 col-md-6">
     <div style="width:100%" class="btn-group-vertical btn-group btn-group-lg">
       <button id="invite-friend-button"
-        ng-repeat="user in users_1"
-        type="button"
-        class="btn btn-default"
-        ng-model="user.selected"
-        btn-checkbox> {{user.name|first_name}} </button>
+              class="btn"
+              ng-class="{'btn-primary':isSelected, 'btn-default':!isSelected}" 
+              ng-click="isSelected = !isSelected"
+              ng-repeat="user in users_1"
+              type="button"
+              ng-model="user.selected"
+              btn-checkbox> {{user.name|first_name}} </button>
     </div>
   </div>
   <div class="col-xs-6 col-sm-6 col-md-6">
     <div style="width:100%" class="btn-group-vertical btn-group btn-group-lg">
       <button id="invite-friend-button"
-        ng-repeat="user in users_2"
-        type="button"
-        class="btn btn-default"
-        ng-model="user.selected" 
-        btn-checkbox> {{user.name|first_name}} </button>
+              class="btn"
+              ng-class="{'btn-primary':isSelected, 'btn-default':!isSelected}" 
+              ng-click="isSelected = !isSelected"
+              ng-repeat="user in users_2"
+              type="button"
+              ng-model="user.selected" 
+
+              btn-checkbox> {{user.name|first_name}} </button>
     </div>
   </div>
 </div>
 
 <hr>
-<button id="send-invite-button" type="button" 
-        class="btn btn-primary btn-lg" ng-click="invite()" 
-        ui-sref="menu.events" style="margin-bottom: 5%">You Down?</button>
+<button id="send-invite-button" 
+        type="button" 
+        class="btn btn-success btn-lg" 
+        ng-click="invite()" 
+        ui-sref="menu.events" 
+        style="margin-bottom: 5%">You Down?</button>
