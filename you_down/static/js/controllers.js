@@ -149,6 +149,8 @@ function EventDetailController($scope, $stateParams,
   
   eventPromise.get().then(function(event){
     $scope.event = event;
+    var time = event.created_time.toString();
+    event.local_created_time = new Date(time);  
     $scope.isRando = true;
     if(event.creator.username === tokenPayload.username) {
       $scope.isCreator = true;
