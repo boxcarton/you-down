@@ -180,11 +180,13 @@ function EventDetailController($scope, $stateParams,
   
   $scope.cancelEvent = function(){
     $scope.event.status = "canceled";
+    delete $scope.event.local_created_time;
     $scope.event.put();
   }
 
   $scope.confirmEvent = function(){
     $scope.event.status = "confirmed";
+    delete $scope.event.local_created_time;
     $scope.event.put();
   }
 
@@ -227,7 +229,7 @@ function EventConfirmController($scope, $stateParams, Restangular) {
   });
 
   function getStatus () {
-    //firstmake arrays of just Ids for easier operation
+    //first make arrays of just Ids for easier operation
     var attendingIds = _.map($scope.event.attendees, 
                              function(l){
                                 return l.id
